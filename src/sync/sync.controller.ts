@@ -1,9 +1,13 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Post } from '@nestjs/common'
+
+import { SyncService } from './sync.service'
 
 @Controller('sync')
 export class SyncController {
-  @Get('hello')
-  hello() {
-    return 'Hello World'
+  constructor(private readonly syncService: SyncService) {}
+
+  @Post('sync')
+  async sync() {
+    await this.syncService.sync()
   }
 }

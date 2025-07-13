@@ -10,9 +10,4 @@ export class SeedController {
   async seed() {
     await this.seedService.seed()
   }
-
-  @Post('save-database')
-  async saveDatabase() {
-    await this.seedService.saveDatabase()
-  }
 }

@@ -16,6 +16,22 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS '';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -516,7 +532,6 @@ COPY public.companies (id, name, "createdAt", "updatedAt") FROM stdin;
 COPY public.jobs (id, title, description, "createdAt", "updatedAt", "remoteId", "companyId") FROM stdin;
 8d62b44c-961e-44d7-8c71-a97065837da0	Software Engineer	Taking down production	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	d13f6ac5-2845-4afd-af07-7ded8832be10	820d85c8-278f-4201-8e9f-e43861ce6b9f
 9092b14b-3d0f-4400-a1dd-30cf0940bbde	Product Manager	Taking all the credit	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	2addd82d-e19d-4f4e-be40-838f61f9d087	820d85c8-278f-4201-8e9f-e43861ce6b9f
-6b3efdaf-9f8d-4bef-b6e6-7acb0cbd2863	Software Engineer Manager	Micromanagaging design decisions	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	08c2e20e-6a9a-4c14-991b-f4de636f8ac4	820d85c8-278f-4201-8e9f-e43861ce6b9f
 \.
 
 
@@ -622,6 +637,13 @@ ALTER TABLE ONLY public.ats_applications
 
 ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT "jobs_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES public.companies(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 
 
 --

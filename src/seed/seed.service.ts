@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 import { RemoteJob } from '@prisma/client'
 import { addMonths } from 'date-fns'
-import { writeFileSync } from 'fs'
 
 import { PrismaService } from 'src/prisma/prisma.service'
 
@@ -145,17 +144,5 @@ export class SeedService {
     ).flat()
 
     return { atsJobs, atsCandidates, atsApplications }
-  }
-
-  async saveDatabase() {
-    const jobs = await this.prisma.remoteJob.findMany()
-    const candidates = await this.prisma.remoteCandidate.findMany()
-    const applications = await this.prisma.remoteApplication.findMany()
-
-    // save to a file called database.json
-    writeFileSync(
-      'database.json',
-      JSON.stringify({ jobs, candidates, applications }, null, 2),
-    )
   }
 }

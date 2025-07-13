@@ -6,7 +6,7 @@ import { SyncService } from './sync.service'
 export class SyncController {
   constructor(private readonly syncService: SyncService) {}
 
-  @Post('sync')
+  @Post('')
   async sync() {
     await this.syncService.sync()
   }

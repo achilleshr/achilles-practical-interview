@@ -41,7 +41,7 @@ export class SyncService {
     const remoteCandidates = await this.remoteAtsService.getCandidates()
     const candidatesWeHaveByRemoteId =
       await this.getCandidatesWeHaveByRemoteId()
-    const candidatesToCreate: RemoteCandidate[] = []
+    const remoteCandidatesToCreate: RemoteCandidate[] = []
     const candidatesToUpdate: { remote: RemoteCandidate; local: Candidate }[] =
       []
     for (const remoteCandidate of remoteCandidates) {
@@ -51,14 +51,14 @@ export class SyncService {
           local: candidatesWeHaveByRemoteId[remoteCandidate.id],
         })
       } else {
-        candidatesToCreate.push(remoteCandidate)
+        remoteCandidatesToCreate.push(remoteCandidate)
       }
     }
     await this.prisma.candidate.createMany({
-      data: candidatesToCreate.map((candidate) => ({
-        firstName: candidate.firstName,
-        lastName: candidate.lastName,
-        email: candidate.email,
+      data: remoteCandidatesToCreate.map((remoteCandidate) => ({
+        firstName: remoteCandidate.firstName,
+        lastName: remoteCandidate.lastName,
+        email: remoteCandidate.email,
       })),
     })
     await Promise.all(

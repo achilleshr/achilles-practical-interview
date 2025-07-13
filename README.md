@@ -37,6 +37,7 @@ brew install docker-compose
 
 docker-compose up -d
 pnpm install
+./scripts/seed_db
 ```
 
 # Compile and run the project

@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RemoteJob {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  RemoteApplications RemoteApplication[]
+
+  @@map("ats_jobs")
+}
+
+model RemoteApplication {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  remoteJobId       String
+  remoteCandidateId String
+
+  RemoteJob       RemoteJob       @relation(fields: [remoteJobId], references: [id], onDelete: Cascade)
+  RemoteCandidate RemoteCandidate @relation(fields: [remoteCandidateId], references: [id], onDelete: Cascade)
+
+  @@map("ats_applications")
+}
+
+model RemoteCandidate {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  remoteApplications RemoteApplication[]
+
+  @@map("ats_candidates")
+}
+
+model Job {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  remoteId    String?
+
+  companyId String
+
+  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  applications Application[]
+
+  @@unique([remoteId])
+  @@map("jobs")
+}
+
+model Application {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remoteId  String?
+
+  candidateId String
+  jobId       String
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([remoteId])
+  @@unique([candidateId, jobId])
+  @@map("applications")
+}
+
+model Candidate {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remoteId  String?
+
+  applications Application[]
+
+  @@unique([remoteId])
+  @@map("candidates")
+}
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobs Job[]
+
+  @@map("companies")
+}

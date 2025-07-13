@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common'
 
+import { RemoteAtsModule } from 'src/remote-ats/remote-ats.module'
+
 import { SyncController } from './sync.controller'
 import { SyncService } from './sync.service'
 
 @Module({
+  imports: [RemoteAtsModule],
   providers: [SyncService],
-  controllers: [SyncController]
+  controllers: [SyncController],
 })
 export class SyncModule {}

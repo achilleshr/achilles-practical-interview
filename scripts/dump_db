@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+# Load environment variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file not found!"
+  exit 1
+fi
+
+if [ -z "$DATABASE_URL" ]; then
+  echo "DATABASE_URL is not set in .env!"
+  exit 1
+fi
+
+pg_dump --no-publications "$DATABASE_URL" > db_dump.sql
+
+echo "Database dumped to db_dump.sql"

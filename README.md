@@ -27,7 +27,7 @@ Requirements:
 
 # Prerequisites
 
-- Install [Docker](https://www.docker.com/)
+- Install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
 
 # Project setup
 

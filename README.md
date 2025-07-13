@@ -34,6 +34,7 @@ Requirements:
 ```bash
 brew install pnpm
 brew install docker-compose
+brew install postgresql
 
 docker-compose up -d
 pnpm install

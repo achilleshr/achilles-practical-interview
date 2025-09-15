@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # Load environment variables from .env
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
@@ -14,6 +16,6 @@ if [ -z "$DATABASE_URL" ]; then
   exit 1
 fi
 
-pg_dump --no-publications "$DATABASE_URL" > db_dump.sql
+pg_dump --no-publications "$DATABASE_URL" > "$SCRIPT_DIR/db_dump.sql"
 
 echo "Database dumped to db_dump.sql"

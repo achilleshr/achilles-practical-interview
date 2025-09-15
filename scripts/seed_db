@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # Load environment variables from .env
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
@@ -16,6 +18,6 @@ fi
 
 psql "$DATABASE_URL" -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
 
-psql "$DATABASE_URL" < db_dump.sql
+psql "$DATABASE_URL" < "$SCRIPT_DIR/db_dump.sql"
 
 echo "Database restored from db_dump.sql"

@@ -1,0 +1,20 @@
+{
+  "name": "achilles-interview",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "node",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "node",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "vscode.typescript-language-features",
+        "esbenp.prettier-vscode",
+        "cweijan.vscode-database-client2"
+      ]
+    }
+  }
+}

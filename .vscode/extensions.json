@@ -2,10 +2,9 @@
   "recommendations": [
     "ms-azuretools.vscode-docker",
     "dbaeumer.vscode-eslint",
-    "github.vscode-github-actions",
-    "eamodio.gitlens",
     "yzhang.markdown-all-in-one",
     "esbenp.prettier-vscode",
-    "prisma.prisma"
+    "prisma.prisma",
+    "cweijan.dbclient-jdbc"
   ]
 }

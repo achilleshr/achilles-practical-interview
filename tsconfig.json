@@ -1,30 +1,27 @@
 {
-  "include": ["scripts", "src"],
-  "exclude": ["node_modules", "dist", "**/*.tsx"],
+  "exclude": ["node_modules", "dist"],
+  "include": ["scripts", "src", "test"],
   "compilerOptions": {
     "allowJs": false,
+    "baseUrl": "./",
     "declaration": true,
     "declarationMap": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "module": "CommonJS",
     "moduleResolution": "node",
     "noErrorTruncation": true,
     "noImplicitAny": true,
+    "outDir": "dist",
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES2022",
-    "baseUrl": "./",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": false,
-    "outDir": "dist",
-    "strictBindCallApply": false,
-    "types": ["node", "jest"]
+    "types": ["node"],
+    "target": "ES2022"
   }
 }

@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict kZBdHQ6HmRrVGHDEbMO1qSStWXuspkukve4yWxHHQzmbHS46w2jCxv4Gd750Z9B
+\restrict NNkuhe3pDebf7cvWv9sOd7rPlCgVbq6V2YFFCuhfkRXeuX2xR6LLmHMlUJ6ZmDb
 
 -- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
@@ -210,6 +210,7 @@ ALTER TABLE public.jobs OWNER TO postgres;
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
 7e9192b0-ef08-480f-8054-74115375967f	2d7c561b442bf2d898df5f563d337a596146d6c75abd35dfe669b92421ebc4b9	2025-07-13 17:43:59.092027+00	20250713174359_init	\N	\N	2025-07-13 17:43:59.062821+00	1
+d262084e-4c11-441c-b69e-51474dd02538	50993d8635c2899e57a383ea5dbf0c4be4ab39508232db9d72b9cc685402237e	2025-07-13 19:21:26+00	20250713192126_add_indices	\N	\N	2025-07-13 19:21:26+00	1
 54f206db-e645-479c-903e-f109bfe78737	4948a4755639100a0a8c09e6fc3161b559870d4b4b7d1236bed5b31d88d41dc7	2026-07-28 18:54:20.115931+00	20260728000000_add_application_statuses	\N	\N	2026-07-28 18:54:20.115931+00	1
 \.
 
@@ -640,6 +641,34 @@ ALTER TABLE ONLY public.jobs
 
 
 --
+-- Name: applications_candidateId_jobId_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX "applications_candidateId_jobId_key" ON public.applications USING btree ("candidateId", "jobId");
+
+
+--
+-- Name: applications_remoteId_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX "applications_remoteId_key" ON public.applications USING btree ("remoteId");
+
+
+--
+-- Name: candidates_remoteId_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX "candidates_remoteId_key" ON public.candidates USING btree ("remoteId");
+
+
+--
+-- Name: jobs_remoteId_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX "jobs_remoteId_key" ON public.jobs USING btree ("remoteId");
+
+
+--
 -- Name: applications applications_candidateId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -690,5 +719,5 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict kZBdHQ6HmRrVGHDEbMO1qSStWXuspkukve4yWxHHQzmbHS46w2jCxv4Gd750Z9B
+\unrestrict NNkuhe3pDebf7cvWv9sOd7rPlCgVbq6V2YFFCuhfkRXeuX2xR6LLmHMlUJ6ZmDb
 

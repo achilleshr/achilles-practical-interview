@@ -29,6 +29,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bodyParser: false,
   })
+  // bodyParser is disabled above; re-enable JSON so request bodies parse.
+  app.useBodyParser('json')
   app.useGlobalPipes(new GlobalCustomValidationPipe())
 
   // Set global prefix

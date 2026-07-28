@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { RemoteApplicationStatus } from '@prisma/client'
 
 import { PrismaService } from 'src/prisma/prisma.service'
 
@@ -109,5 +110,35 @@ export class RemoteAtsService {
       },
     })
     return applications
+  }
+
+  async updateCandidate(
+    id: string,
+    data: {
+      firstName?: string
+      lastName?: string
+      email?: string
+    },
+  ) {
+    const candidate = await this.prisma.remoteCandidate.update({
+      where: { id },
+      data,
+    })
+    return candidate
+  }
+
+  async updateApplication(
+    id: string,
+    data: {
+      status?: RemoteApplicationStatus
+      remoteJobId?: string
+      remoteCandidateId?: string
+    },
+  ) {
+    const application = await this.prisma.remoteApplication.update({
+      where: { id },
+      data,
+    })
+    return application
   }
 }

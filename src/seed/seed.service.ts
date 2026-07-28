@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
-import { RemoteJob } from '@prisma/client'
+import { RemoteApplicationStatus, RemoteJob } from '@prisma/client'
 import { addMonths } from 'date-fns'
 
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -133,6 +133,7 @@ export class SeedService {
                 data: {
                   remoteCandidateId: candidate.id,
                   remoteJobId: job.id,
+                  status: faker.helpers.enumValue(RemoteApplicationStatus),
                   createdAt,
                   updatedAt: createdAt,
                 },

@@ -19,7 +19,7 @@ Requirements:
 ## Issues we've noticed
 
 - We're seeing a lot of duplicate candidates. For some reason we're seeing the same candidate show up many times in the database
-- Apart from the duplicates, we're seeing a lot more candidates than we would expect. For example, the candidate Darrin Becker does not have any applications to jobs we have configured but they're still in our database.
+- Apart from the duplicates, we're seeing a lot more candidates than we would expect. For example, the candidate Darrin Becker does not have any applications to jobs we have configured but they still exist in our database as a candidate.
 
 ## Product improvements we'd like to make
 
@@ -89,6 +89,5 @@ curl -X POST http://localhost:8080/v1/sync
 | Folder | Purpose | Key contents |
 |---|---|---|
 | `src/prisma/` | Database access layer. | `prisma.service.ts`, `prisma.module.ts` |
-| `src/remote-ats/` | Stands in for the external ATS the challenge is about ("the `remoteAtsService`"). Read-only accessors (`getCandidates`, `getJobs`, `getApplications`, with filters like `createdAfter`). | `remote-ats.service.ts`, `.controller.ts` (empty), `.module.ts` |
+| `src/remote-ats/` | Stands in for the external ATS the challenge is about ("the `remoteAtsService`"). Read accessors (`getCandidates`, `getJobs`, `getApplications`, with filters like `createdAfter`) plus write endpoints (`PATCH /v1/remote-ats/candidates/:id` and `/applications/:id`). | `remote-ats.service.ts`, `.controller.ts`, `.module.ts`, `dto/` |
 | `src/sync/` | The core challenge, syncs data into local tables. `POST /v1/sync`. | `sync.service.ts`, `.controller.ts`, `.module.ts` |
-| `src/seed/` | App-level fake-data generator. `POST /v1/seed`. | `seed.service.ts`, `.controller.ts`, `.module.ts` |

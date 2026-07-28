@@ -25,10 +25,34 @@ model RemoteJob {
   @@map("ats_jobs")
 }
 
+enum RemoteApplicationStatus {
+  REMOTE_APPLIED
+  REMOTE_SCREEN
+  REMOTE_INTERVIEW
+  REMOTE_OFFER
+  REMOTE_HIRED
+  REMOTE_REJECTED
+  REMOTE_NEW_LEAD
+  REMOTE_INTERNALLY_SUBMITTED
+  REMOTE_CANDIDATE_DECLINED_LOCATION
+  REMOTE_INTERVIEWING
+  REMOTE_APPROVED
+  REMOTE_MAYBE
+}
+
+// Local application stages, intentionally a smaller set than the remote statuses.
+enum ApplicationStatus {
+  APPLIED
+  INTERVIEWING
+  OFFER
+  REJECTED
+}
+
 model RemoteApplication {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String                  @id @default(uuid())
+  status    RemoteApplicationStatus @default(REMOTE_APPLIED)
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
 
   remoteJobId       String
   remoteCandidateId String
@@ -70,9 +94,10 @@ model Job {
 }
 
 model Application {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String             @id @default(uuid())
+  status    ApplicationStatus?
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
   remoteId  String?
 
   candidateId String

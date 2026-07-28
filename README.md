@@ -19,7 +19,7 @@ Requirements:
 ## Issues we've noticed
 
 - We're seeing a lot of duplicate candidates. For some reason we're seeing the same candidate show up many times in the database
-- Apart from the duplicates, we're seeing a lot more candidates than we would expect. For example, the candidate Darrin Becker does not have any applications to jobs we have configured but they're still in our database.
+- Apart from the duplicates, we're seeing a lot more candidates than we would expect. For example, the candidate Darrin Becker does not have any applications to jobs we have configured but they still exist in our database as a candidate.
 
 ## Product improvements we'd like to make
 

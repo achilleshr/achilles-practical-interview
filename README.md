@@ -25,24 +25,70 @@ Requirements:
 
 - Right now, we pull in all candidates and applications on every sync. We'd like to do incremental syncs so we only look at changes that have happened since our last sync.
 
-# Prerequisites
+# Setup
 
-- Install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
+This project runs entirely in a **dev container** — a single image with
+Node.js 22 and PostgreSQL 16 wired together. Open it either way:
 
-# Project setup
+- **GitHub Codespaces:** click **Code → Codespaces → Create codespace**.
+- **Locally:** install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
+  and the VS Code [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+  extension, then **Reopen in Container**.
 
-```bash
-brew install pnpm
-brew install docker-compose
-brew install postgresql
+There's nothing to install by hand. On first create, the container automatically
+starts PostgreSQL, installs dependencies, generates the Prisma client, and seeds
+the database from `scripts/db_dump.sql`.
 
-docker-compose up -d
-pnpm install
-./scripts/seed_db
-```
-
-# Compile and run the project
+Once it finishes, confirm everything is wired up correctly:
 
 ```bash
-pnpm start
+pnpm verify
 ```
+
+This checks tooling, dependencies, the Prisma client, and that the database is
+reachable and seeded. It should report all checks passing.
+
+# Commands
+
+| Command | What it does |
+|---|---|
+| `pnpm start` | Boots the NestJS app in watch mode (auto-restarts on changes). API at `:8080/v1`, Swagger at [http://localhost:8080/api](http://localhost:8080/api). |
+| `pnpm build` | Compiles TypeScript to `dist/` (production build). |
+| `pnpm verify` | Health-checks the environment: tooling, dependencies, Prisma client, and that the database is running and seeded. Starts Postgres if it isn't already. |
+| `pnpm pg:seed` | Resets the database to the starting state (wipes the schema and restores `scripts/db_dump.sql`). |
+| `pnpm prisma:generate` | Regenerates the Prisma client from `prisma/schema.prisma`. Run after changing the schema. |
+| `pnpm prisma:migrate` | Creates and applies a new migration from schema changes, and regenerates the client. |
+| `pnpm lint` | Runs ESLint across the source and auto-fixes issues. |
+| `pnpm format` | Reformats the source with Prettier. |
+
+**Database connection**
+
+Postgres is available at:
+
+```
+postgresql://postgres:postgres@postgres/postgres?sslmode=disable
+```
+
+This is already set as `DATABASE_URL` in `.env`. The `postgres` host resolves to
+localhost inside the container. To open a `psql` shell:
+
+```bash
+psql "postgresql://postgres:postgres@postgres/postgres?sslmode=disable"
+```
+
+**Call an endpoint**
+
+With the server running (`pnpm start`), trigger a sync:
+
+```bash
+curl -X POST http://localhost:8080/v1/sync
+```
+
+# App layout
+
+| Folder | Purpose | Key contents |
+|---|---|---|
+| `src/prisma/` | Database access layer. | `prisma.service.ts`, `prisma.module.ts` |
+| `src/remote-ats/` | Stands in for the external ATS the challenge is about ("the `remoteAtsService`"). Read-only accessors (`getCandidates`, `getJobs`, `getApplications`, with filters like `createdAfter`). | `remote-ats.service.ts`, `.controller.ts` (empty), `.module.ts` |
+| `src/sync/` | The core challenge, syncs data into local tables. `POST /v1/sync`. | `sync.service.ts`, `.controller.ts`, `.module.ts` |
+| `src/seed/` | App-level fake-data generator. `POST /v1/seed`. | `seed.service.ts`, `.controller.ts`, `.module.ts` |

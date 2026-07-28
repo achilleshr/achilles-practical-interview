@@ -1,18 +1,28 @@
 {
   "name": "achilles-interview",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "node",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "remoteUser": "node",
-  "shutdownAction": "stopCompose",
+  "overrideCommand": true,
+  "forwardPorts": [8080, 5432],
+  "portsAttributes": {
+    "8080": { "label": "NestJS app" },
+    "5432": { "label": "PostgreSQL" }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
   "customizations": {
     "vscode": {
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash"
       },
       "extensions": [
-        "vscode.typescript-language-features",
         "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "prisma.prisma",
         "cweijan.vscode-database-client2"
       ]
     }

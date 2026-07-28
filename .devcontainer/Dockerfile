@@ -1,49 +1,26 @@
-FROM ubuntu:24.04
+FROM mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install prerequisites
-RUN apt-get update && apt-get install -y \
-    curl \
-    ca-certificates \
-    gnupg \
-    && rm -rf /var/lib/apt/lists/*
+# The lifecycle scripts use sudo (to start the Postgres cluster and edit
+# /etc/hosts). The node user has no password set, so guarantee passwordless
+# sudo — otherwise post-create.sh stalls on a "[sudo] password for node:" prompt.
+RUN echo 'node ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/99-node-nopasswd \
+    && chmod 0440 /etc/sudoers.d/99-node-nopasswd
 
-# Install Node.js 22 (via NodeSource)
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install PostgreSQL 16 (via PGDG repo for a specific version)
+# Install PostgreSQL 16 (server + client) from the PGDG apt repo so the
+# database runs inside the same image as the Node app. The base image already
+# provides the "node" user, git, sudo and corepack, so nothing else is needed.
 RUN install -d /usr/share/postgresql-common/pgdg \
-    && curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc \
+    && curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc \
        https://www.postgresql.org/media/keys/ACCC4CF8.asc \
-    && echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] http://apt.postgresql.org/pub/repos/apt noble-pgdg main" \
+    && echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" \
        > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update \
-    && apt-get install -y postgresql-16 \
+    && apt-get install -y --no-install-recommends postgresql-16 postgresql-client-16 \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/usr/lib/postgresql/16/bin:${PATH}"
 
-# Start postgres and keep container running (adjust to your needs)
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-
-# # Base image with Node.js 20 and TypeScript toolchain
-# FROM mcr.microsoft.com/devcontainers/typescript-node:20
-
-# RUN apt-get update || true && \
-#     apt-get install -y --no-install-recommends wget gnupg lsb-release && \
-#     echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" \
-#       > /etc/apt/sources.list.d/pgdg.list && \
-#     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-#     apt-get update && \
-#     apt-get install -y --no-install-recommends postgresql-client-16 && \
-#     update-alternatives --install /usr/bin/psql psql /usr/lib/postgresql/16/bin/psql 160 && \
-#     update-alternatives --install /usr/bin/pg_dump pg_dump /usr/lib/postgresql/16/bin/pg_dump 160 && \
-#     update-alternatives --install /usr/bin/pg_restore pg_restore /usr/lib/postgresql/16/bin/pg_restore 160 && \
-#     update-alternatives --install /usr/bin/pg_basebackup pg_basebackup /usr/lib/postgresql/16/bin/pg_basebackup 160 && \
-#     rm -rf /var/lib/apt/lists/*
-
+# The project is pnpm-based (see README + scripts). Activate it via corepack.
+RUN corepack enable && corepack prepare pnpm@latest --activate

@@ -23,4 +23,6 @@ RUN install -d /usr/share/postgresql-common/pgdg \
 ENV PATH="/usr/lib/postgresql/16/bin:${PATH}"
 
 # The project is pnpm-based (see README + scripts). Activate it via corepack.
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Pinned to match "packageManager" in package.json and the committed
+# pnpm-lock.yaml, so every rebuild installs the exact same toolchain + deps.
+RUN corepack enable && corepack prepare pnpm@10.11.0 --activate

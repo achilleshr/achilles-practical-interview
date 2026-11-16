@@ -14,11 +14,12 @@ datasource db {
 }
 
 model RemoteJob {
-  id          String   @id @default(uuid())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   title       String
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 
   RemoteApplications RemoteApplication[]
 
@@ -49,10 +50,11 @@ enum ApplicationStatus {
 }
 
 model RemoteApplication {
-  id        String                  @id @default(uuid())
-  status    RemoteApplicationStatus @default(REMOTE_APPLIED)
-  createdAt DateTime                @default(now())
-  updatedAt DateTime                @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status RemoteApplicationStatus @default(REMOTE_APPLIED)
 
   remoteJobId       String
   remoteCandidateId String
@@ -65,11 +67,12 @@ model RemoteApplication {
 
 model RemoteCandidate {
   id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   firstName String
   lastName  String
   email     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   remoteApplications RemoteApplication[]
 
@@ -77,11 +80,12 @@ model RemoteCandidate {
 }
 
 model Job {
-  id          String   @id @default(uuid())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   title       String
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   remoteId    String?
 
   companyId String
@@ -94,11 +98,12 @@ model Job {
 }
 
 model Application {
-  id        String             @id @default(uuid())
-  status    ApplicationStatus?
-  createdAt DateTime           @default(now())
-  updatedAt DateTime           @updatedAt
-  remoteId  String?
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status   ApplicationStatus?
+  remoteId String?
 
   candidateId String
   jobId       String
@@ -113,11 +118,12 @@ model Application {
 
 model Candidate {
   id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   firstName String
   lastName  String
   email     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   remoteId  String?
 
   applications Application[]
@@ -128,9 +134,10 @@ model Candidate {
 
 model Company {
   id        String   @id @default(uuid())
-  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  name String
 
   jobs Job[]
 

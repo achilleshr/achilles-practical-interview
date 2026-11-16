@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict W6CDlRGqoekbVneJmD0SBosUuMHQ2xRRMWbi5glbCBjpyufMoUSArrfIfyFQmhi
+\restrict achillesinterview
 
 -- Dumped from database version 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)
@@ -722,5 +722,5 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict W6CDlRGqoekbVneJmD0SBosUuMHQ2xRRMWbi5glbCBjpyufMoUSArrfIfyFQmhi
+\unrestrict achillesinterview
 

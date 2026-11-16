@@ -118,6 +118,8 @@ model Application {
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
+  interviews Interview[]
+
   @@unique([remoteId])
   @@unique([candidateId, jobId])
   @@map("applications")
@@ -138,6 +140,8 @@ model Candidate {
   timezone    String?
 
   applications Application[]
+
+  interviews Interview[]
 
   @@unique([remoteId])
   @@map("candidates")
@@ -177,4 +181,21 @@ model Location {
 
   @@unique([phoneNumber])
   @@map("locations")
+}
+
+model Interview {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // When the interview starts, in UTC.
+  startsAt DateTime
+
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@map("interviews")
 }

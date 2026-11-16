@@ -192,6 +192,22 @@ CREATE TABLE public.companies (
 ALTER TABLE public.companies OWNER TO postgres;
 
 --
+-- Name: interviews; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.interviews (
+    id text NOT NULL,
+    "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "updatedAt" timestamp(3) without time zone NOT NULL,
+    "startsAt" timestamp(3) without time zone NOT NULL,
+    "candidateId" text NOT NULL,
+    "applicationId" text NOT NULL
+);
+
+
+ALTER TABLE public.interviews OWNER TO postgres;
+
+--
 -- Name: jobs; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -238,6 +254,7 @@ d262084e-4c11-441c-b69e-51474dd02538	50993d8635c2899e57a383ea5dbf0c4be4ab3950823
 974eb855-6443-436f-a3a0-1464fa464be9	396862ddff3c8ecdc61290963cf5d9d03ff96305c605f2dd2f6033d5c5e2764c	2026-11-16 23:28:46.520585+00	20261116000000_add_phone_numbers		\N	2026-11-16 23:28:46.520585+00	0
 7c689895-7e60-41cd-befc-60351de343b6	2c9a9943205de097284cb428266efd71f4674a4e556f505c208510b01de2ab5b	2026-11-16 23:53:03.773869+00	20261117000000_add_locations		\N	2026-11-16 23:53:03.773869+00	0
 d082852b-0897-460e-8226-1472e45d55f6	adf3cfdd99899d1143076921e096de2d9a627aae93e38c0a8e2424d02522e82e	2026-11-16 23:54:07.655555+00	20261117000100_add_candidate_timezone		\N	2026-11-16 23:54:07.655555+00	0
+8209c104-04ed-468f-beee-da9e9873579e	b154f3acc1d4517f8805bff6cf1534df7560d01e626ff8992184bf5386f65e69	2026-11-16 23:54:38.398267+00	20261117000200_add_interviews		\N	2026-11-16 23:54:38.398267+00	0
 \.
 
 
@@ -593,6 +610,14 @@ COPY public.companies (id, name, "createdAt", "updatedAt") FROM stdin;
 
 
 --
+-- Data for Name: interviews; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.interviews (id, "createdAt", "updatedAt", "startsAt", "candidateId", "applicationId") FROM stdin;
+\.
+
+
+--
 -- Data for Name: jobs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -667,6 +692,14 @@ ALTER TABLE ONLY public.candidates
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: interviews interviews_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.interviews
+    ADD CONSTRAINT interviews_pkey PRIMARY KEY (id);
 
 
 --
@@ -750,6 +783,22 @@ ALTER TABLE ONLY public.ats_applications
 
 ALTER TABLE ONLY public.ats_applications
     ADD CONSTRAINT "ats_applications_remoteJobId_fkey" FOREIGN KEY ("remoteJobId") REFERENCES public.ats_jobs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: interviews interviews_applicationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.interviews
+    ADD CONSTRAINT "interviews_applicationId_fkey" FOREIGN KEY ("applicationId") REFERENCES public.applications(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: interviews interviews_candidateId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.interviews
+    ADD CONSTRAINT "interviews_candidateId_fkey" FOREIGN KEY ("candidateId") REFERENCES public.candidates(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

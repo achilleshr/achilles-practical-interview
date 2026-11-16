@@ -59,6 +59,7 @@ export class SyncService {
         firstName: remoteCandidate.firstName,
         lastName: remoteCandidate.lastName,
         email: remoteCandidate.email,
+        phoneNumber: remoteCandidate.phoneNumber,
       })),
     })
     await Promise.all(
@@ -69,6 +70,7 @@ export class SyncService {
             firstName: remote.firstName,
             lastName: remote.lastName,
             email: remote.email,
+            phoneNumber: remote.phoneNumber,
           },
         })
       }),

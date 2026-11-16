@@ -16,6 +16,11 @@ import { addMonths } from 'date-fns'
 
 const prisma = new PrismaClient()
 
+// Fictional numbers in the reserved 555-0100 to 555-0199 range, in E.164.
+const AREA_CODES = ['212', '214', '303', '312', '317', '404', '415', '602']
+const fakePhoneNumber = () =>
+  `+1${faker.helpers.arrayElement(AREA_CODES)}55501${faker.string.numeric(2)}`
+
 async function seedAtsData() {
   const createdAt1 = faker.date.past({ years: 3 })
   const createdAt2 = faker.date.past({ years: 3 })
@@ -54,6 +59,7 @@ async function seedAtsData() {
           firstName: faker.person.firstName(),
           lastName: faker.person.lastName(),
           email: faker.internet.email(),
+          phoneNumber: fakePhoneNumber(),
           createdAt,
           updatedAt: createdAt,
         },

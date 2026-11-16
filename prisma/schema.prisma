@@ -74,6 +74,8 @@ model RemoteCandidate {
   lastName  String
   email     String
 
+  phoneNumber String
+
   remoteApplications RemoteApplication[]
 
   @@map("ats_candidates")
@@ -125,6 +127,8 @@ model Candidate {
   lastName  String
   email     String
   remoteId  String?
+
+  phoneNumber String
 
   applications Application[]
 

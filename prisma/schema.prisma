@@ -95,6 +95,9 @@ model Job {
   company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   applications Application[]
 
+  locationId String
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
   @@unique([remoteId])
   @@map("jobs")
 }
@@ -145,5 +148,29 @@ model Company {
 
   jobs Job[]
 
+  locations Location[]
+
   @@map("companies")
+}
+
+// A physical site where candidates interview and work.
+model Location {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  address     String
+  // IANA time zone, e.g. "America/Chicago".
+  timezone    String
+  // E.164 number that texts about this location are sent from.
+  phoneNumber String
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  jobs Job[]
+
+  @@unique([phoneNumber])
+  @@map("locations")
 }

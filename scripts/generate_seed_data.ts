@@ -99,8 +99,40 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
     data: { name: 'AchillesHR', createdAt, updatedAt: createdAt },
   })
 
+  const locations = await Promise.all(
+    [
+      {
+        name: 'AchillesHR - New York',
+        address: '100 Broadway, New York, NY 10005',
+        timezone: 'America/New_York',
+        phoneNumber: '+16465550100',
+      },
+      {
+        name: 'AchillesHR - Chicago',
+        address: '200 W Madison St, Chicago, IL 60606',
+        timezone: 'America/Chicago',
+        phoneNumber: '+17735550100',
+      },
+      {
+        name: 'AchillesHR - Phoenix',
+        address: '300 N Central Ave, Phoenix, AZ 85004',
+        timezone: 'America/Phoenix',
+        phoneNumber: '+14805550100',
+      },
+    ].map((location) =>
+      prisma.location.create({
+        data: {
+          ...location,
+          companyId: company.id,
+          createdAt,
+          updatedAt: createdAt,
+        },
+      }),
+    ),
+  )
+
   const jobs = await Promise.all(
-    atsJobs.map((job) =>
+    atsJobs.map((job, i) =>
       prisma.job.create({
         data: {
           description: job.description,
@@ -108,6 +140,7 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
           createdAt: addMonths(createdAt, 3),
           updatedAt: addMonths(createdAt, 3),
           companyId: company.id,
+          locationId: locations[i % locations.length].id,
           remoteId: job.id,
         },
       }),

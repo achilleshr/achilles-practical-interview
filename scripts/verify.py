@@ -30,6 +30,7 @@ EXPECTED_TABLES = [
     "jobs",
     "candidates",
     "applications",
+    "locations",
     "ats_jobs",
     "ats_candidates",
     "ats_applications",

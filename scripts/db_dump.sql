@@ -200,11 +200,30 @@ CREATE TABLE public.jobs (
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
     "remoteId" text,
-    "companyId" text NOT NULL
+    "companyId" text NOT NULL,
+    "locationId" text NOT NULL
 );
 
 
 ALTER TABLE public.jobs OWNER TO postgres;
+
+--
+-- Name: locations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.locations (
+    id text NOT NULL,
+    "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "updatedAt" timestamp(3) without time zone NOT NULL,
+    name text NOT NULL,
+    address text NOT NULL,
+    timezone text NOT NULL,
+    "phoneNumber" text NOT NULL,
+    "companyId" text NOT NULL
+);
+
+
+ALTER TABLE public.locations OWNER TO postgres;
 
 --
 -- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -215,6 +234,7 @@ COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs,
 d262084e-4c11-441c-b69e-51474dd02538	50993d8635c2899e57a383ea5dbf0c4be4ab39508232db9d72b9cc685402237e	2025-07-13 19:21:26+00	20250713192126_add_indices	\N	\N	2025-07-13 19:21:26+00	1
 54f206db-e645-479c-903e-f109bfe78737	4948a4755639100a0a8c09e6fc3161b559870d4b4b7d1236bed5b31d88d41dc7	2026-07-28 18:54:20.115931+00	20260728000000_add_application_statuses	\N	\N	2026-07-28 18:54:20.115931+00	1
 974eb855-6443-436f-a3a0-1464fa464be9	396862ddff3c8ecdc61290963cf5d9d03ff96305c605f2dd2f6033d5c5e2764c	2026-11-16 23:28:46.520585+00	20261116000000_add_phone_numbers		\N	2026-11-16 23:28:46.520585+00	0
+7c689895-7e60-41cd-befc-60351de343b6	2c9a9943205de097284cb428266efd71f4674a4e556f505c208510b01de2ab5b	2026-11-16 23:53:03.773869+00	20261117000000_add_locations		\N	2026-11-16 23:53:03.773869+00	0
 \.
 
 
@@ -573,9 +593,20 @@ COPY public.companies (id, name, "createdAt", "updatedAt") FROM stdin;
 -- Data for Name: jobs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.jobs (id, title, description, "createdAt", "updatedAt", "remoteId", "companyId") FROM stdin;
-8d62b44c-961e-44d7-8c71-a97065837da0	Software Engineer	Taking down production	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	d13f6ac5-2845-4afd-af07-7ded8832be10	820d85c8-278f-4201-8e9f-e43861ce6b9f
-9092b14b-3d0f-4400-a1dd-30cf0940bbde	Product Manager	Taking all the credit	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	2addd82d-e19d-4f4e-be40-838f61f9d087	820d85c8-278f-4201-8e9f-e43861ce6b9f
+COPY public.jobs (id, title, description, "createdAt", "updatedAt", "remoteId", "companyId", "locationId") FROM stdin;
+8d62b44c-961e-44d7-8c71-a97065837da0	Software Engineer	Taking down production	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	d13f6ac5-2845-4afd-af07-7ded8832be10	820d85c8-278f-4201-8e9f-e43861ce6b9f	951cca43-cb1c-49ff-9bec-3f5c77b925eb
+9092b14b-3d0f-4400-a1dd-30cf0940bbde	Product Manager	Taking all the credit	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	2addd82d-e19d-4f4e-be40-838f61f9d087	820d85c8-278f-4201-8e9f-e43861ce6b9f	a7c2394e-ab32-4bd7-8708-618a16d940c6
+\.
+
+
+--
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.locations (id, "createdAt", "updatedAt", name, address, timezone, "phoneNumber", "companyId") FROM stdin;
+951cca43-cb1c-49ff-9bec-3f5c77b925eb	2025-01-26 14:39:35.042	2025-01-26 14:39:35.042	AchillesHR - New York	100 Broadway, New York, NY 10005	America/New_York	+16465550100	820d85c8-278f-4201-8e9f-e43861ce6b9f
+a7c2394e-ab32-4bd7-8708-618a16d940c6	2025-01-26 14:39:35.042	2025-01-26 14:39:35.042	AchillesHR - Chicago	200 W Madison St, Chicago, IL 60606	America/Chicago	+17735550100	820d85c8-278f-4201-8e9f-e43861ce6b9f
+9a390e0e-a4fd-445b-ab34-defe53281f05	2025-01-26 14:39:35.042	2025-01-26 14:39:35.042	AchillesHR - Phoenix	300 N Central Ave, Phoenix, AZ 85004	America/Phoenix	+14805550100	820d85c8-278f-4201-8e9f-e43861ce6b9f
 \.
 
 
@@ -644,6 +675,14 @@ ALTER TABLE ONLY public.jobs
 
 
 --
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: applications_candidateId_jobId_key; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -669,6 +708,13 @@ CREATE UNIQUE INDEX "candidates_remoteId_key" ON public.candidates USING btree (
 --
 
 CREATE UNIQUE INDEX "jobs_remoteId_key" ON public.jobs USING btree ("remoteId");
+
+
+--
+-- Name: locations_phoneNumber_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX "locations_phoneNumber_key" ON public.locations USING btree ("phoneNumber");
 
 
 --
@@ -709,6 +755,22 @@ ALTER TABLE ONLY public.ats_applications
 
 ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT "jobs_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES public.companies(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: jobs jobs_locationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT "jobs_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES public.locations(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: locations locations_companyId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT "locations_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES public.companies(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

@@ -136,7 +136,8 @@ CREATE TABLE public.ats_candidates (
     email text NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
-    "phoneNumber" text NOT NULL
+    "phoneNumber" text NOT NULL,
+    timezone text
 );
 
 
@@ -169,7 +170,8 @@ CREATE TABLE public.candidates (
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
     "remoteId" text,
-    "phoneNumber" text NOT NULL
+    "phoneNumber" text NOT NULL,
+    timezone text
 );
 
 
@@ -235,6 +237,7 @@ d262084e-4c11-441c-b69e-51474dd02538	50993d8635c2899e57a383ea5dbf0c4be4ab3950823
 54f206db-e645-479c-903e-f109bfe78737	4948a4755639100a0a8c09e6fc3161b559870d4b4b7d1236bed5b31d88d41dc7	2026-07-28 18:54:20.115931+00	20260728000000_add_application_statuses	\N	\N	2026-07-28 18:54:20.115931+00	1
 974eb855-6443-436f-a3a0-1464fa464be9	396862ddff3c8ecdc61290963cf5d9d03ff96305c605f2dd2f6033d5c5e2764c	2026-11-16 23:28:46.520585+00	20261116000000_add_phone_numbers		\N	2026-11-16 23:28:46.520585+00	0
 7c689895-7e60-41cd-befc-60351de343b6	2c9a9943205de097284cb428266efd71f4674a4e556f505c208510b01de2ab5b	2026-11-16 23:53:03.773869+00	20261117000000_add_locations		\N	2026-11-16 23:53:03.773869+00	0
+d082852b-0897-460e-8226-1472e45d55f6	adf3cfdd99899d1143076921e096de2d9a627aae93e38c0a8e2424d02522e82e	2026-11-16 23:54:07.655555+00	20261117000100_add_candidate_timezone		\N	2026-11-16 23:54:07.655555+00	0
 \.
 
 
@@ -457,107 +460,107 @@ fdfb3679-3b2e-483e-9236-72a6f6f61c6e	2024-01-22 18:29:38.293	2024-01-22 18:29:38
 -- Data for Name: ats_candidates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.ats_candidates (id, "firstName", "lastName", email, "createdAt", "updatedAt", "phoneNumber") FROM stdin;
-723fc9f3-24a1-44c7-a62f-e5f092f3546f	Darrin	Becker	Enrico_Hermann40@hotmail.com	2025-05-13 23:43:31.371	2025-05-13 23:43:31.371	+13175550142
-30406f71-8702-442d-8a52-4cdb05c36e71	Jaylen	Kunde	Nedra14@gmail.com	2025-06-02 03:44:11.53	2025-06-02 03:44:11.53	+12145550179
-6d9580af-bd00-4c3f-8c3c-ac8d4ac3af65	Rashawn	Bogan	Birdie_Wilderman@yahoo.com	2025-02-11 05:38:27.763	2025-02-11 05:38:27.763	+16025550136
-adf8481f-29e7-4936-9af5-2e9a9c1fae8c	Olga	Ankunding	Alena7@hotmail.com	2023-10-26 20:17:58.244	2023-10-26 20:17:58.244	+13125550192
-334872d7-5d2c-4dbc-a9b3-a56c74eb3056	Eugenia	Okuneva	Marjolaine42@hotmail.com	2023-11-22 23:07:14.058	2023-11-22 23:07:14.058	+12125550116
-41e82ee9-dab7-4b72-acc4-bb17ec10edbc	Lazaro	Cronin-Hoeger	Kelsie_Dibbert@hotmail.com	2024-08-07 20:58:45.529	2024-08-07 20:58:45.529	+16025550147
-2abfc0d2-5e3b-46ba-bf60-24543f6afc26	Orie	Klocko	Roel_Beier@gmail.com	2024-06-10 08:07:05.884	2024-06-10 08:07:05.884	+16025550131
-25d1e462-5302-4c35-865b-e937806867ec	Isabelle	McGlynn	Noble30@gmail.com	2025-01-19 23:55:45.174	2025-01-19 23:55:45.174	+12145550175
-7f275266-00be-4238-8490-4fde9bb08c6b	Barton	Schowalter	Beatrice.Zulauf90@hotmail.com	2024-11-24 19:26:10.242	2024-11-24 19:26:10.242	+13175550172
-5ca1cf94-e694-4a51-a92d-602e1344c967	Adelbert	Lesch	Sammy.Gislason43@yahoo.com	2024-11-12 10:41:53.512	2024-11-12 10:41:53.512	+16025550197
-ba734a97-680e-48dd-89eb-005a5dfc252f	Travis	Fisher	Jeanette_Lindgren89@yahoo.com	2023-03-31 08:05:52.652	2023-03-31 08:05:52.652	+14155550100
-745d2ec7-95dd-4f19-a211-136031ba4d3f	Kellen	Konopelski	Tatum_Pfeffer@hotmail.com	2024-02-19 07:51:35.25	2024-02-19 07:51:35.25	+14155550118
-5d6cd354-6263-4464-84f8-b078cc68c5b5	Dulce	Walsh	Isai_Jaskolski@yahoo.com	2025-05-03 00:54:53.914	2025-05-03 00:54:53.914	+12145550169
-ebb8c3ef-3301-4f42-bc31-6c3cd8c2aeb0	Henderson	Wehner	Hank95@yahoo.com	2023-06-02 10:50:40.54	2023-06-02 10:50:40.54	+14155550183
-d06ead2d-c222-442e-968c-cc287a8406af	Dixie	Fadel	Monique86@hotmail.com	2025-01-22 04:59:39.094	2025-01-22 04:59:39.094	+13125550134
-3a31fdda-030d-47de-8316-70a4c56158fb	Angus	Walker	Patience.Koch76@hotmail.com	2023-04-03 18:44:57.226	2023-04-03 18:44:57.226	+12145550141
-c151da95-eee5-4951-907f-b02eaeaa7701	Kasey	Bergnaum	Clemens.Jacobs99@gmail.com	2023-03-10 07:06:21.469	2023-03-10 07:06:21.469	+12145550106
-cb6fe2f7-ea4b-48c5-b501-b22676ca7c75	Jerome	Brakus	Jedidiah4@yahoo.com	2023-08-05 14:17:59.391	2023-08-05 14:17:59.391	+13035550149
-fd3ec6f4-ce36-4401-a33b-97ca7809f34b	Franco	McCullough	Letha1@hotmail.com	2023-01-06 20:41:15.91	2023-01-06 20:41:15.91	+16025550187
-fcfdc719-7c06-48a7-b76d-606078bb7a21	Annamae	Mraz	Sigrid_Waters@yahoo.com	2024-08-28 12:34:35.079	2024-08-28 12:34:35.079	+13175550192
-bfc33749-5588-4aa7-a57f-2e05e7c1532e	Jess	Spinka	Marty.Durgan@gmail.com	2024-06-25 14:13:06.637	2024-06-25 14:13:06.637	+14045550129
-ebd0b80f-a34b-4b56-97ae-4a906081cc32	Jaylin	Wolff	General_Hilpert79@hotmail.com	2022-09-28 23:15:50.167	2022-09-28 23:15:50.167	+14155550199
-5a6913fa-8872-4917-9cb7-f720e98234d4	Hilario	Cummerata	Leola_Botsford-Reichert@yahoo.com	2023-01-03 17:26:45.39	2023-01-03 17:26:45.39	+13125550175
-929db05d-27da-4bed-a269-de1dcd568f64	Queen	Williamson	Bettie_Herman@hotmail.com	2025-02-28 06:30:28.851	2025-02-28 06:30:28.851	+16025550110
-d8c6250b-4b0b-4a25-aa01-1d2b6e7b8f3f	Virgie	Vandervort	Hilario_Quitzon-Bergnaum@yahoo.com	2022-09-30 05:03:26.321	2022-09-30 05:03:26.321	+16025550166
-e16e3ef6-04c1-46ff-93cc-dbe89cc6bb5c	Mavis	Larkin	Melody_Hane-Johns50@gmail.com	2023-05-20 19:41:13.604	2023-05-20 19:41:13.604	+14045550191
-ec3cf458-8c92-495b-b074-26fd505a4e51	Alice	Batz	Katrina_Emmerich78@hotmail.com	2025-04-02 06:21:10.175	2025-04-02 06:21:10.175	+14155550109
-ec4b377d-a8c5-44f5-b334-9264cfbbbdcb	Kaycee	Stroman	Twila54@yahoo.com	2025-02-14 17:30:36.981	2025-02-14 17:30:36.981	+16025550197
-89911801-1e07-4144-8eae-813a3a277024	Rahsaan	Hagenes	Emelia70@yahoo.com	2022-10-27 03:22:58.679	2022-10-27 03:22:58.679	+16025550157
-7b6ae1e7-cb99-4545-86e3-eb8e39e015fd	Ronaldo	Heathcote	Damaris30@yahoo.com	2023-08-24 01:25:15.305	2023-08-24 01:25:15.305	+12125550167
-434b58eb-b8a1-4f63-93e5-cff2babb33bc	Johnny	Rau	Anibal.Keebler58@yahoo.com	2022-10-30 14:35:14.281	2022-10-30 14:35:14.281	+14155550107
-c643c977-2463-4b75-85cd-7de764f349aa	Wyatt	Dach	Dedric_OKon62@gmail.com	2025-02-08 16:41:36.207	2025-02-08 16:41:36.207	+16025550187
-3281ea8f-97c1-4c33-b046-66486ec2ff10	Myrtice	Miller	Adrian_Koss@gmail.com	2024-08-05 14:52:54.975	2024-08-05 14:52:54.975	+13125550193
-98faa699-dc5b-4a69-9be4-f731caf796d1	Justina	Barrows	Meghan.Waelchi87@gmail.com	2025-04-05 02:14:30.72	2025-04-05 02:14:30.72	+12145550141
-cf0b811e-9d24-4bb6-bf1b-9a07d5dff728	Jazmyne	Abbott	Avis19@yahoo.com	2024-10-27 03:04:15.301	2024-10-27 03:04:15.301	+13125550179
-af2c24b4-f1b1-4e24-bf06-ccaee9b66a1f	Hermann	Altenwerth-Hoppe	Maggie.Gottlieb10@hotmail.com	2024-08-05 23:28:27.605	2024-08-05 23:28:27.605	+13175550177
-7ff814e9-274b-47c0-aeda-b2aa50a9704b	Ron	Gislason	Walton_Hodkiewicz70@gmail.com	2024-01-13 20:16:43.74	2024-01-13 20:16:43.74	+12125550151
-1c3e4d32-26be-474e-a0dc-a45d14a9bf0f	Marcia	Bins-Dickinson	Vada.Pagac@yahoo.com	2024-08-23 21:00:52.119	2024-08-23 21:00:52.119	+13125550194
-ee050ef6-268f-4322-945f-23d67448f4a5	Abagail	Satterfield	Brooks_Johnson41@yahoo.com	2024-05-16 12:36:31.197	2024-05-16 12:36:31.197	+14045550129
-41679c31-41c4-40b4-9e94-f49cfb6de1fe	Hans	Block	Sierra_Mohr@gmail.com	2023-11-17 02:46:34.547	2023-11-17 02:46:34.547	+12145550122
-3f0e3dee-6ca7-4452-a307-58dad9e52a30	Shakira	Marquardt	Ava.Hickle@gmail.com	2025-03-22 14:53:07.032	2025-03-22 14:53:07.032	+14045550149
-5fc71f3d-62e6-49bf-9e6e-2327e5c3e7e1	Faustino	Renner	Robbie_Stanton28@gmail.com	2023-07-31 01:21:44.248	2023-07-31 01:21:44.248	+12145550162
-78df3a03-451e-4342-86bd-592af8e0871e	Savion	Kling	Bonnie.Jenkins98@hotmail.com	2023-01-05 10:44:48.594	2023-01-05 10:44:48.594	+12145550189
-9605228c-6d89-4223-8121-9bbd5aff160c	Esther	Turner	Marie68@hotmail.com	2024-06-20 19:42:43.696	2024-06-20 19:42:43.696	+14045550160
-fdc5d486-b0f7-4e35-a6b4-0fe947308f62	Claire	Raynor-Hayes	Lizeth.Donnelly-Weissnat@yahoo.com	2024-11-28 16:18:00.11	2024-11-28 16:18:00.11	+13125550100
-6fdda033-33da-4515-8962-b9533f3f530a	Mireille	Cormier	Lola15@hotmail.com	2025-01-17 10:46:29.2	2025-01-17 10:46:29.2	+12145550161
-b4f93a1f-b749-4262-a1ca-e3b4074e9903	Judson	Bergnaum	Celestine.Schmitt@gmail.com	2024-04-11 10:57:35.633	2024-04-11 10:57:35.633	+12125550146
-5f4a14a1-21eb-4cf0-9428-a3309a968291	Tatyana	Schamberger	Bert.Gislason@yahoo.com	2025-01-24 21:41:40.966	2025-01-24 21:41:40.966	+12125550136
-a73bb19b-d784-45ac-ad6d-1cdb049c9afd	Hailee	Frami	Rebeka.Boyer-Schaefer@yahoo.com	2024-07-20 05:36:57.718	2024-07-20 05:36:57.718	+12125550186
-cecf9292-a0aa-43cb-ac2f-63f6e4faf93e	Elsa	Streich	Carlo.McDermott59@hotmail.com	2023-04-08 22:04:21.273	2023-04-08 22:04:21.273	+13175550168
-e3fa30a8-6b6a-40db-a6c5-3edc4ca89739	Magdalena	Donnelly	Orland_Koss@hotmail.com	2025-02-10 07:57:00.765	2025-02-10 07:57:00.765	+13175550128
-ac797750-8dc7-47fc-a5ee-70b969c4ec0b	Chase	Wehner	Zane_Beahan1@gmail.com	2023-03-17 15:45:37.11	2023-03-17 15:45:37.11	+14045550198
-d954f09c-0c12-4933-9fc5-bc431398d757	Hailee	Stroman	Aliza75@gmail.com	2022-10-19 02:58:56.439	2022-10-19 02:58:56.439	+12125550153
-2defdfaa-57dc-48ca-a722-c03ef47150d9	Maddison	Senger	Francesco.Bosco69@gmail.com	2024-10-27 14:36:54.78	2024-10-27 14:36:54.78	+13125550184
-ef36b699-f58a-49ae-a6a3-d465ec7c5714	Skyla	Ortiz	Roberta.Hane@hotmail.com	2024-09-20 20:36:02.439	2024-09-20 20:36:02.439	+13175550115
-93567c42-e5f3-471d-982c-9d43617ec89f	Lew	Lockman	Khalid55@gmail.com	2025-05-01 20:49:40.887	2025-05-01 20:49:40.887	+13035550168
-aa5dfaf4-52aa-4051-aa86-49c99a3fc2de	Rhea	Wintheiser	Valentin_Jacobi5@yahoo.com	2023-03-19 19:14:34.803	2023-03-19 19:14:34.803	+12125550107
-9e86a3b7-cede-4f29-9b98-3fdeee1cc86c	Forrest	Towne	Dashawn_Hansen14@gmail.com	2024-01-01 12:51:06.192	2024-01-01 12:51:06.192	+13175550188
-cef1467f-b607-4cfd-a507-ae9699febc30	Kyla	Hyatt	Benedict59@gmail.com	2025-03-18 21:28:01.765	2025-03-18 21:28:01.765	+13125550160
-c261b7f4-51f2-4e83-9bf5-13957e8a6513	Clemmie	Luettgen	Osvaldo_Hodkiewicz@gmail.com	2025-04-28 04:12:49.608	2025-04-28 04:12:49.608	+13125550158
-5666da7d-02be-4758-af93-7881446f4af7	Kiarra	Luettgen	Clementina.Kshlerin94@hotmail.com	2025-05-19 05:36:16.33	2025-05-19 05:36:16.33	+14155550130
-fdf26143-050e-44ac-a88e-50ff824b36a3	Korbin	Barton	Tremayne8@yahoo.com	2023-02-09 23:07:39.954	2023-02-09 23:07:39.954	+14045550197
-c15b848f-5978-419f-8b8c-11518df19fb1	Lolita	Thiel	Carissa_Conn@hotmail.com	2024-04-03 21:49:03.623	2024-04-03 21:49:03.623	+14045550142
-7fc6be9a-42fe-4d1d-a9c1-2851302fce32	Connie	Franecki	Luisa_Stanton-Bernhard@yahoo.com	2023-10-16 01:21:23.584	2023-10-16 01:21:23.584	+13035550166
-dec4116e-9003-44fb-a3a5-037b071dd91d	Beth	Stracke	Dandre52@yahoo.com	2024-03-13 12:59:27.416	2024-03-13 12:59:27.416	+16025550141
-13571180-afb3-4781-b6cd-6cb2cfe69318	Samir	Boyle	Skyla.Purdy59@gmail.com	2024-12-27 08:59:14.572	2024-12-27 08:59:14.572	+16025550101
-061801a3-0ecd-4e8f-b0ea-58a5a825ac35	Nasir	Lindgren	Harold22@hotmail.com	2023-01-04 10:41:47.767	2023-01-04 10:41:47.767	+13035550171
-5a7f0a64-c67d-48f2-bf04-cc1fea7f0ec9	Allen	Flatley	Modesta.Smitham@hotmail.com	2025-06-10 05:11:33.79	2025-06-10 05:11:33.79	+16025550118
-eac1ae5b-24ba-4b6b-9a61-0934ac20e811	Devin	Bailey	Arnoldo38@hotmail.com	2024-09-18 11:49:29.234	2024-09-18 11:49:29.234	+13175550172
-b1ce5990-93d2-4287-9d49-6ed31d688daf	Arielle	Pfeffer	Darian36@yahoo.com	2023-11-09 01:52:30.437	2023-11-09 01:52:30.437	+16025550133
-5b261ca5-1122-4255-9abd-2121ec33b7b0	Reva	Steuber	Nolan.Farrell@gmail.com	2024-01-14 11:50:08.75	2024-01-14 11:50:08.75	+14045550196
-926f7e61-9e43-46bb-a779-eba2caa70447	Cicero	O'Keefe	Earnestine66@yahoo.com	2022-10-04 13:44:50.758	2022-10-04 13:44:50.758	+13175550197
-f53cdaf8-eee7-420d-b725-125a7db2c83e	Jared	Wisoky-Kling	Alfreda.OKon25@gmail.com	2023-01-28 13:38:35.18	2023-01-28 13:38:35.18	+13125550151
-9e4015ab-c021-4298-96ab-5cae8251ac0b	Rachel	Jacobson	Tyrell88@gmail.com	2024-10-19 20:37:34.292	2024-10-19 20:37:34.292	+12145550109
-37fa12bf-3f88-473d-8571-c95b1c505010	Lessie	Lebsack	Brooklyn_Bahringer@yahoo.com	2024-10-08 18:58:01.459	2024-10-08 18:58:01.459	+13175550190
-03724f8e-1411-4287-8827-0a80616462e1	Shyann	Cremin-Sauer	Kaycee20@yahoo.com	2022-07-26 10:40:22.009	2022-07-26 10:40:22.009	+12145550167
-97c4ab00-e0fc-4c51-8e5f-ff7d764ca143	Kassandra	Rolfson	Jacinthe.Hirthe55@hotmail.com	2024-08-28 17:53:43.646	2024-08-28 17:53:43.646	+12145550169
-dafeed35-f575-4a6a-a5cd-78ddb932241f	Talia	O'Connell	Ansel.Schoen58@hotmail.com	2023-06-04 08:48:13.673	2023-06-04 08:48:13.673	+12125550161
-de5ad740-dea1-4c94-8f19-b53fb753462f	Katlyn	Hamill	Hallie79@hotmail.com	2024-05-22 10:46:30.178	2024-05-22 10:46:30.178	+14045550158
-656cb63e-4a86-4075-a6b1-40b6b734fe06	Noemy	Lockman	Monserrat_Hane-Morar54@gmail.com	2022-11-18 08:26:23.116	2022-11-18 08:26:23.116	+14155550175
-91e635c3-5adc-45da-a5aa-7718407bea44	Ezekiel	Hartmann	Britney.Sawayn82@hotmail.com	2025-03-20 23:16:14.493	2025-03-20 23:16:14.493	+12145550139
-a78476bb-5af4-40c6-b539-fce684d0d8fb	Christop	Kuvalis	Anabel.Goodwin38@gmail.com	2024-04-09 22:47:49.753	2024-04-09 22:47:49.753	+13125550191
-4b2f67d5-dd6c-415a-8bb3-181f74138c51	Josianne	Weissnat	Abdiel_Dickinson29@hotmail.com	2023-08-10 02:44:46.771	2023-08-10 02:44:46.771	+13125550117
-8db503d8-08af-4b7a-805c-227244d421a4	Abdullah	Wiza	Stone.Kuhn80@hotmail.com	2024-02-14 15:03:01.441	2024-02-14 15:03:01.441	+13035550160
-7dfa0f9a-9eca-426c-a42e-e6d0851b36af	Maida	Johns	Darren_Dach30@hotmail.com	2025-03-22 17:51:50.043	2025-03-22 17:51:50.043	+12145550159
-4d5980f1-9a65-45a6-9669-9826910d3793	Esther	Kuphal	Ena36@hotmail.com	2023-07-13 19:34:06.624	2023-07-13 19:34:06.624	+14155550130
-a86def5b-970b-4df4-b771-a31050aa9cc7	Gustave	Dietrich	Julius86@gmail.com	2024-03-17 18:50:27.272	2024-03-17 18:50:27.272	+13035550198
-c48eb004-1657-4d63-9adf-f11bd17fbcf8	Nat	Steuber	Destiny.Schinner@hotmail.com	2025-01-31 22:34:17.913	2025-01-31 22:34:17.913	+16025550101
-349bcf65-b3fc-4f92-b927-98674c843200	Hulda	Reichert	Ignatius53@gmail.com	2023-02-06 08:56:40.97	2023-02-06 08:56:40.97	+14045550186
-fceab0d4-2522-4990-aaba-7e4246226aa9	Vena	Goldner	Noe_Bogisich@yahoo.com	2023-04-09 08:19:48.099	2023-04-09 08:19:48.099	+14045550162
-478fcb29-7126-4977-bda3-c4768edff81a	Kali	Leuschke	Richard.Kemmer16@hotmail.com	2024-01-12 02:17:01.291	2024-01-12 02:17:01.291	+13125550137
-2fbe510d-623d-47d2-8b21-81dd283a7328	Demond	Kshlerin	Mauricio50@gmail.com	2023-03-27 02:40:51.678	2023-03-27 02:40:51.678	+16025550150
-3d380957-c582-42a5-a967-10bc889c27cb	Miguel	Botsford	Ambrose44@gmail.com	2025-06-14 20:48:28.684	2025-06-14 20:48:28.684	+14155550109
-63364074-3fb0-4866-bfac-1c587130654b	Oran	Waelchi	Sharon52@yahoo.com	2024-08-28 14:35:59.342	2024-08-28 14:35:59.342	+13175550118
-ec2fc3e5-380e-4d14-9451-3e8e5243f508	Birdie	Powlowski	Isaiah.Bruen38@gmail.com	2024-08-18 18:18:31.199	2024-08-18 18:18:31.199	+13035550160
-5eb3447b-99ea-4e07-be66-5c4848188f49	Allene	Sipes	Leopold_Barton@hotmail.com	2024-03-29 01:54:31.254	2024-03-29 01:54:31.254	+13125550134
-7348efc6-3c64-4985-8b79-3a50412f492a	Osborne	Goyette	Harmon30@hotmail.com	2024-10-15 21:56:46.795	2024-10-15 21:56:46.795	+12125550130
-cc52876a-1e0e-468a-95c5-a4bf2812a511	Hunter	Glover	Tyrese_Goyette@hotmail.com	2023-04-09 08:10:24.215	2023-04-09 08:10:24.215	+13035550147
-511a5f25-fa2a-49b1-82ef-d45ce5667a5e	Rosella	Haag	Davin.Crooks43@hotmail.com	2025-06-22 08:54:35.857	2025-06-22 08:54:35.857	+12145550155
-519ada65-2cbb-4d50-acc6-197ac39608e3	Cleveland	Simonis	Antone.Wiza@gmail.com	2023-07-11 01:18:40.551	2023-07-11 01:18:40.551	+12125550117
+COPY public.ats_candidates (id, "firstName", "lastName", email, "createdAt", "updatedAt", "phoneNumber", timezone) FROM stdin;
+334872d7-5d2c-4dbc-a9b3-a56c74eb3056	Eugenia	Okuneva	Marjolaine42@hotmail.com	2023-11-22 23:07:14.058	2023-11-22 23:07:14.058	+12125550116	\N
+d06ead2d-c222-442e-968c-cc287a8406af	Dixie	Fadel	Monique86@hotmail.com	2025-01-22 04:59:39.094	2025-01-22 04:59:39.094	+13125550134	\N
+5a6913fa-8872-4917-9cb7-f720e98234d4	Hilario	Cummerata	Leola_Botsford-Reichert@yahoo.com	2023-01-03 17:26:45.39	2023-01-03 17:26:45.39	+13125550175	\N
+929db05d-27da-4bed-a269-de1dcd568f64	Queen	Williamson	Bettie_Herman@hotmail.com	2025-02-28 06:30:28.851	2025-02-28 06:30:28.851	+16025550110	\N
+434b58eb-b8a1-4f63-93e5-cff2babb33bc	Johnny	Rau	Anibal.Keebler58@yahoo.com	2022-10-30 14:35:14.281	2022-10-30 14:35:14.281	+14155550107	\N
+3281ea8f-97c1-4c33-b046-66486ec2ff10	Myrtice	Miller	Adrian_Koss@gmail.com	2024-08-05 14:52:54.975	2024-08-05 14:52:54.975	+13125550193	\N
+cf0b811e-9d24-4bb6-bf1b-9a07d5dff728	Jazmyne	Abbott	Avis19@yahoo.com	2024-10-27 03:04:15.301	2024-10-27 03:04:15.301	+13125550179	\N
+1c3e4d32-26be-474e-a0dc-a45d14a9bf0f	Marcia	Bins-Dickinson	Vada.Pagac@yahoo.com	2024-08-23 21:00:52.119	2024-08-23 21:00:52.119	+13125550194	\N
+78df3a03-451e-4342-86bd-592af8e0871e	Savion	Kling	Bonnie.Jenkins98@hotmail.com	2023-01-05 10:44:48.594	2023-01-05 10:44:48.594	+12145550189	\N
+9605228c-6d89-4223-8121-9bbd5aff160c	Esther	Turner	Marie68@hotmail.com	2024-06-20 19:42:43.696	2024-06-20 19:42:43.696	+14045550160	\N
+b4f93a1f-b749-4262-a1ca-e3b4074e9903	Judson	Bergnaum	Celestine.Schmitt@gmail.com	2024-04-11 10:57:35.633	2024-04-11 10:57:35.633	+12125550146	\N
+5f4a14a1-21eb-4cf0-9428-a3309a968291	Tatyana	Schamberger	Bert.Gislason@yahoo.com	2025-01-24 21:41:40.966	2025-01-24 21:41:40.966	+12125550136	\N
+a73bb19b-d784-45ac-ad6d-1cdb049c9afd	Hailee	Frami	Rebeka.Boyer-Schaefer@yahoo.com	2024-07-20 05:36:57.718	2024-07-20 05:36:57.718	+12125550186	\N
+ef36b699-f58a-49ae-a6a3-d465ec7c5714	Skyla	Ortiz	Roberta.Hane@hotmail.com	2024-09-20 20:36:02.439	2024-09-20 20:36:02.439	+13175550115	\N
+9e86a3b7-cede-4f29-9b98-3fdeee1cc86c	Forrest	Towne	Dashawn_Hansen14@gmail.com	2024-01-01 12:51:06.192	2024-01-01 12:51:06.192	+13175550188	\N
+fdf26143-050e-44ac-a88e-50ff824b36a3	Korbin	Barton	Tremayne8@yahoo.com	2023-02-09 23:07:39.954	2023-02-09 23:07:39.954	+14045550197	\N
+061801a3-0ecd-4e8f-b0ea-58a5a825ac35	Nasir	Lindgren	Harold22@hotmail.com	2023-01-04 10:41:47.767	2023-01-04 10:41:47.767	+13035550171	\N
+926f7e61-9e43-46bb-a779-eba2caa70447	Cicero	O'Keefe	Earnestine66@yahoo.com	2022-10-04 13:44:50.758	2022-10-04 13:44:50.758	+13175550197	\N
+03724f8e-1411-4287-8827-0a80616462e1	Shyann	Cremin-Sauer	Kaycee20@yahoo.com	2022-07-26 10:40:22.009	2022-07-26 10:40:22.009	+12145550167	\N
+349bcf65-b3fc-4f92-b927-98674c843200	Hulda	Reichert	Ignatius53@gmail.com	2023-02-06 08:56:40.97	2023-02-06 08:56:40.97	+14045550186	\N
+2fbe510d-623d-47d2-8b21-81dd283a7328	Demond	Kshlerin	Mauricio50@gmail.com	2023-03-27 02:40:51.678	2023-03-27 02:40:51.678	+16025550150	\N
+63364074-3fb0-4866-bfac-1c587130654b	Oran	Waelchi	Sharon52@yahoo.com	2024-08-28 14:35:59.342	2024-08-28 14:35:59.342	+13175550118	\N
+5eb3447b-99ea-4e07-be66-5c4848188f49	Allene	Sipes	Leopold_Barton@hotmail.com	2024-03-29 01:54:31.254	2024-03-29 01:54:31.254	+13125550134	\N
+cc52876a-1e0e-468a-95c5-a4bf2812a511	Hunter	Glover	Tyrese_Goyette@hotmail.com	2023-04-09 08:10:24.215	2023-04-09 08:10:24.215	+13035550147	\N
+519ada65-2cbb-4d50-acc6-197ac39608e3	Cleveland	Simonis	Antone.Wiza@gmail.com	2023-07-11 01:18:40.551	2023-07-11 01:18:40.551	+12125550117	\N
+ec4b377d-a8c5-44f5-b334-9264cfbbbdcb	Kaycee	Stroman	Twila54@yahoo.com	2025-02-14 17:30:36.981	2025-02-14 17:30:36.981	+16025550197	America/Phoenix
+745d2ec7-95dd-4f19-a211-136031ba4d3f	Kellen	Konopelski	Tatum_Pfeffer@hotmail.com	2024-02-19 07:51:35.25	2024-02-19 07:51:35.25	+14155550118	America/Los_Angeles
+cecf9292-a0aa-43cb-ac2f-63f6e4faf93e	Elsa	Streich	Carlo.McDermott59@hotmail.com	2023-04-08 22:04:21.273	2023-04-08 22:04:21.273	+13175550168	America/Indiana/Indianapolis
+ee050ef6-268f-4322-945f-23d67448f4a5	Abagail	Satterfield	Brooks_Johnson41@yahoo.com	2024-05-16 12:36:31.197	2024-05-16 12:36:31.197	+14045550129	America/New_York
+7fc6be9a-42fe-4d1d-a9c1-2851302fce32	Connie	Franecki	Luisa_Stanton-Bernhard@yahoo.com	2023-10-16 01:21:23.584	2023-10-16 01:21:23.584	+13035550166	America/Denver
+fcfdc719-7c06-48a7-b76d-606078bb7a21	Annamae	Mraz	Sigrid_Waters@yahoo.com	2024-08-28 12:34:35.079	2024-08-28 12:34:35.079	+13175550192	America/Indiana/Indianapolis
+7b6ae1e7-cb99-4545-86e3-eb8e39e015fd	Ronaldo	Heathcote	Damaris30@yahoo.com	2023-08-24 01:25:15.305	2023-08-24 01:25:15.305	+12125550167	America/New_York
+5b261ca5-1122-4255-9abd-2121ec33b7b0	Reva	Steuber	Nolan.Farrell@gmail.com	2024-01-14 11:50:08.75	2024-01-14 11:50:08.75	+14045550196	America/New_York
+b1ce5990-93d2-4287-9d49-6ed31d688daf	Arielle	Pfeffer	Darian36@yahoo.com	2023-11-09 01:52:30.437	2023-11-09 01:52:30.437	+16025550133	America/Phoenix
+5d6cd354-6263-4464-84f8-b078cc68c5b5	Dulce	Walsh	Isai_Jaskolski@yahoo.com	2025-05-03 00:54:53.914	2025-05-03 00:54:53.914	+12145550169	America/Chicago
+fceab0d4-2522-4990-aaba-7e4246226aa9	Vena	Goldner	Noe_Bogisich@yahoo.com	2023-04-09 08:19:48.099	2023-04-09 08:19:48.099	+14045550162	America/New_York
+ec2fc3e5-380e-4d14-9451-3e8e5243f508	Birdie	Powlowski	Isaiah.Bruen38@gmail.com	2024-08-18 18:18:31.199	2024-08-18 18:18:31.199	+13035550160	America/Denver
+ba734a97-680e-48dd-89eb-005a5dfc252f	Travis	Fisher	Jeanette_Lindgren89@yahoo.com	2023-03-31 08:05:52.652	2023-03-31 08:05:52.652	+14155550100	America/Los_Angeles
+6fdda033-33da-4515-8962-b9533f3f530a	Mireille	Cormier	Lola15@hotmail.com	2025-01-17 10:46:29.2	2025-01-17 10:46:29.2	+12145550161	America/Chicago
+3d380957-c582-42a5-a967-10bc889c27cb	Miguel	Botsford	Ambrose44@gmail.com	2025-06-14 20:48:28.684	2025-06-14 20:48:28.684	+14155550109	America/Los_Angeles
+8db503d8-08af-4b7a-805c-227244d421a4	Abdullah	Wiza	Stone.Kuhn80@hotmail.com	2024-02-14 15:03:01.441	2024-02-14 15:03:01.441	+13035550160	America/Denver
+2abfc0d2-5e3b-46ba-bf60-24543f6afc26	Orie	Klocko	Roel_Beier@gmail.com	2024-06-10 08:07:05.884	2024-06-10 08:07:05.884	+16025550131	America/Phoenix
+7348efc6-3c64-4985-8b79-3a50412f492a	Osborne	Goyette	Harmon30@hotmail.com	2024-10-15 21:56:46.795	2024-10-15 21:56:46.795	+12125550130	America/New_York
+c48eb004-1657-4d63-9adf-f11bd17fbcf8	Nat	Steuber	Destiny.Schinner@hotmail.com	2025-01-31 22:34:17.913	2025-01-31 22:34:17.913	+16025550101	America/Phoenix
+656cb63e-4a86-4075-a6b1-40b6b734fe06	Noemy	Lockman	Monserrat_Hane-Morar54@gmail.com	2022-11-18 08:26:23.116	2022-11-18 08:26:23.116	+14155550175	America/Los_Angeles
+723fc9f3-24a1-44c7-a62f-e5f092f3546f	Darrin	Becker	Enrico_Hermann40@hotmail.com	2025-05-13 23:43:31.371	2025-05-13 23:43:31.371	+13175550142	America/Indiana/Indianapolis
+98faa699-dc5b-4a69-9be4-f731caf796d1	Justina	Barrows	Meghan.Waelchi87@gmail.com	2025-04-05 02:14:30.72	2025-04-05 02:14:30.72	+12145550141	America/Chicago
+cef1467f-b607-4cfd-a507-ae9699febc30	Kyla	Hyatt	Benedict59@gmail.com	2025-03-18 21:28:01.765	2025-03-18 21:28:01.765	+13125550160	America/Chicago
+93567c42-e5f3-471d-982c-9d43617ec89f	Lew	Lockman	Khalid55@gmail.com	2025-05-01 20:49:40.887	2025-05-01 20:49:40.887	+13035550168	America/Denver
+5fc71f3d-62e6-49bf-9e6e-2327e5c3e7e1	Faustino	Renner	Robbie_Stanton28@gmail.com	2023-07-31 01:21:44.248	2023-07-31 01:21:44.248	+12145550162	America/Chicago
+aa5dfaf4-52aa-4051-aa86-49c99a3fc2de	Rhea	Wintheiser	Valentin_Jacobi5@yahoo.com	2023-03-19 19:14:34.803	2023-03-19 19:14:34.803	+12125550107	America/New_York
+37fa12bf-3f88-473d-8571-c95b1c505010	Lessie	Lebsack	Brooklyn_Bahringer@yahoo.com	2024-10-08 18:58:01.459	2024-10-08 18:58:01.459	+13175550190	America/Indiana/Indianapolis
+5a7f0a64-c67d-48f2-bf04-cc1fea7f0ec9	Allen	Flatley	Modesta.Smitham@hotmail.com	2025-06-10 05:11:33.79	2025-06-10 05:11:33.79	+16025550118	America/Phoenix
+a78476bb-5af4-40c6-b539-fce684d0d8fb	Christop	Kuvalis	Anabel.Goodwin38@gmail.com	2024-04-09 22:47:49.753	2024-04-09 22:47:49.753	+13125550191	America/Chicago
+ec3cf458-8c92-495b-b074-26fd505a4e51	Alice	Batz	Katrina_Emmerich78@hotmail.com	2025-04-02 06:21:10.175	2025-04-02 06:21:10.175	+14155550109	America/Los_Angeles
+ebd0b80f-a34b-4b56-97ae-4a906081cc32	Jaylin	Wolff	General_Hilpert79@hotmail.com	2022-09-28 23:15:50.167	2022-09-28 23:15:50.167	+14155550199	America/Los_Angeles
+41e82ee9-dab7-4b72-acc4-bb17ec10edbc	Lazaro	Cronin-Hoeger	Kelsie_Dibbert@hotmail.com	2024-08-07 20:58:45.529	2024-08-07 20:58:45.529	+16025550147	America/Phoenix
+97c4ab00-e0fc-4c51-8e5f-ff7d764ca143	Kassandra	Rolfson	Jacinthe.Hirthe55@hotmail.com	2024-08-28 17:53:43.646	2024-08-28 17:53:43.646	+12145550169	America/Chicago
+bfc33749-5588-4aa7-a57f-2e05e7c1532e	Jess	Spinka	Marty.Durgan@gmail.com	2024-06-25 14:13:06.637	2024-06-25 14:13:06.637	+14045550129	America/New_York
+ac797750-8dc7-47fc-a5ee-70b969c4ec0b	Chase	Wehner	Zane_Beahan1@gmail.com	2023-03-17 15:45:37.11	2023-03-17 15:45:37.11	+14045550198	America/New_York
+fd3ec6f4-ce36-4401-a33b-97ca7809f34b	Franco	McCullough	Letha1@hotmail.com	2023-01-06 20:41:15.91	2023-01-06 20:41:15.91	+16025550187	America/Phoenix
+41679c31-41c4-40b4-9e94-f49cfb6de1fe	Hans	Block	Sierra_Mohr@gmail.com	2023-11-17 02:46:34.547	2023-11-17 02:46:34.547	+12145550122	America/Chicago
+c643c977-2463-4b75-85cd-7de764f349aa	Wyatt	Dach	Dedric_OKon62@gmail.com	2025-02-08 16:41:36.207	2025-02-08 16:41:36.207	+16025550187	America/Phoenix
+a86def5b-970b-4df4-b771-a31050aa9cc7	Gustave	Dietrich	Julius86@gmail.com	2024-03-17 18:50:27.272	2024-03-17 18:50:27.272	+13035550198	America/Denver
+89911801-1e07-4144-8eae-813a3a277024	Rahsaan	Hagenes	Emelia70@yahoo.com	2022-10-27 03:22:58.679	2022-10-27 03:22:58.679	+16025550157	America/Phoenix
+cb6fe2f7-ea4b-48c5-b501-b22676ca7c75	Jerome	Brakus	Jedidiah4@yahoo.com	2023-08-05 14:17:59.391	2023-08-05 14:17:59.391	+13035550149	America/Denver
+f53cdaf8-eee7-420d-b725-125a7db2c83e	Jared	Wisoky-Kling	Alfreda.OKon25@gmail.com	2023-01-28 13:38:35.18	2023-01-28 13:38:35.18	+13125550151	America/Chicago
+e3fa30a8-6b6a-40db-a6c5-3edc4ca89739	Magdalena	Donnelly	Orland_Koss@hotmail.com	2025-02-10 07:57:00.765	2025-02-10 07:57:00.765	+13175550128	America/Indiana/Indianapolis
+30406f71-8702-442d-8a52-4cdb05c36e71	Jaylen	Kunde	Nedra14@gmail.com	2025-06-02 03:44:11.53	2025-06-02 03:44:11.53	+12145550179	America/Chicago
+4d5980f1-9a65-45a6-9669-9826910d3793	Esther	Kuphal	Ena36@hotmail.com	2023-07-13 19:34:06.624	2023-07-13 19:34:06.624	+14155550130	America/Los_Angeles
+fdc5d486-b0f7-4e35-a6b4-0fe947308f62	Claire	Raynor-Hayes	Lizeth.Donnelly-Weissnat@yahoo.com	2024-11-28 16:18:00.11	2024-11-28 16:18:00.11	+13125550100	America/Chicago
+dec4116e-9003-44fb-a3a5-037b071dd91d	Beth	Stracke	Dandre52@yahoo.com	2024-03-13 12:59:27.416	2024-03-13 12:59:27.416	+16025550141	America/Phoenix
+c15b848f-5978-419f-8b8c-11518df19fb1	Lolita	Thiel	Carissa_Conn@hotmail.com	2024-04-03 21:49:03.623	2024-04-03 21:49:03.623	+14045550142	America/New_York
+adf8481f-29e7-4936-9af5-2e9a9c1fae8c	Olga	Ankunding	Alena7@hotmail.com	2023-10-26 20:17:58.244	2023-10-26 20:17:58.244	+13125550192	America/Chicago
+5666da7d-02be-4758-af93-7881446f4af7	Kiarra	Luettgen	Clementina.Kshlerin94@hotmail.com	2025-05-19 05:36:16.33	2025-05-19 05:36:16.33	+14155550130	America/Los_Angeles
+c151da95-eee5-4951-907f-b02eaeaa7701	Kasey	Bergnaum	Clemens.Jacobs99@gmail.com	2023-03-10 07:06:21.469	2023-03-10 07:06:21.469	+12145550106	America/Chicago
+4b2f67d5-dd6c-415a-8bb3-181f74138c51	Josianne	Weissnat	Abdiel_Dickinson29@hotmail.com	2023-08-10 02:44:46.771	2023-08-10 02:44:46.771	+13125550117	America/Chicago
+de5ad740-dea1-4c94-8f19-b53fb753462f	Katlyn	Hamill	Hallie79@hotmail.com	2024-05-22 10:46:30.178	2024-05-22 10:46:30.178	+14045550158	America/New_York
+511a5f25-fa2a-49b1-82ef-d45ce5667a5e	Rosella	Haag	Davin.Crooks43@hotmail.com	2025-06-22 08:54:35.857	2025-06-22 08:54:35.857	+12145550155	America/Chicago
+2defdfaa-57dc-48ca-a722-c03ef47150d9	Maddison	Senger	Francesco.Bosco69@gmail.com	2024-10-27 14:36:54.78	2024-10-27 14:36:54.78	+13125550184	America/Chicago
+3f0e3dee-6ca7-4452-a307-58dad9e52a30	Shakira	Marquardt	Ava.Hickle@gmail.com	2025-03-22 14:53:07.032	2025-03-22 14:53:07.032	+14045550149	America/New_York
+7dfa0f9a-9eca-426c-a42e-e6d0851b36af	Maida	Johns	Darren_Dach30@hotmail.com	2025-03-22 17:51:50.043	2025-03-22 17:51:50.043	+12145550159	America/Chicago
+478fcb29-7126-4977-bda3-c4768edff81a	Kali	Leuschke	Richard.Kemmer16@hotmail.com	2024-01-12 02:17:01.291	2024-01-12 02:17:01.291	+13125550137	America/Chicago
+c261b7f4-51f2-4e83-9bf5-13957e8a6513	Clemmie	Luettgen	Osvaldo_Hodkiewicz@gmail.com	2025-04-28 04:12:49.608	2025-04-28 04:12:49.608	+13125550158	America/Chicago
+6d9580af-bd00-4c3f-8c3c-ac8d4ac3af65	Rashawn	Bogan	Birdie_Wilderman@yahoo.com	2025-02-11 05:38:27.763	2025-02-11 05:38:27.763	+16025550136	America/Phoenix
+25d1e462-5302-4c35-865b-e937806867ec	Isabelle	McGlynn	Noble30@gmail.com	2025-01-19 23:55:45.174	2025-01-19 23:55:45.174	+12145550175	America/Chicago
+d8c6250b-4b0b-4a25-aa01-1d2b6e7b8f3f	Virgie	Vandervort	Hilario_Quitzon-Bergnaum@yahoo.com	2022-09-30 05:03:26.321	2022-09-30 05:03:26.321	+16025550166	America/Phoenix
+9e4015ab-c021-4298-96ab-5cae8251ac0b	Rachel	Jacobson	Tyrell88@gmail.com	2024-10-19 20:37:34.292	2024-10-19 20:37:34.292	+12145550109	America/Chicago
+3a31fdda-030d-47de-8316-70a4c56158fb	Angus	Walker	Patience.Koch76@hotmail.com	2023-04-03 18:44:57.226	2023-04-03 18:44:57.226	+12145550141	America/Chicago
+ebb8c3ef-3301-4f42-bc31-6c3cd8c2aeb0	Henderson	Wehner	Hank95@yahoo.com	2023-06-02 10:50:40.54	2023-06-02 10:50:40.54	+14155550183	America/Los_Angeles
+91e635c3-5adc-45da-a5aa-7718407bea44	Ezekiel	Hartmann	Britney.Sawayn82@hotmail.com	2025-03-20 23:16:14.493	2025-03-20 23:16:14.493	+12145550139	America/Chicago
+eac1ae5b-24ba-4b6b-9a61-0934ac20e811	Devin	Bailey	Arnoldo38@hotmail.com	2024-09-18 11:49:29.234	2024-09-18 11:49:29.234	+13175550172	America/Indiana/Indianapolis
+e16e3ef6-04c1-46ff-93cc-dbe89cc6bb5c	Mavis	Larkin	Melody_Hane-Johns50@gmail.com	2023-05-20 19:41:13.604	2023-05-20 19:41:13.604	+14045550191	America/New_York
+13571180-afb3-4781-b6cd-6cb2cfe69318	Samir	Boyle	Skyla.Purdy59@gmail.com	2024-12-27 08:59:14.572	2024-12-27 08:59:14.572	+16025550101	America/Phoenix
+7ff814e9-274b-47c0-aeda-b2aa50a9704b	Ron	Gislason	Walton_Hodkiewicz70@gmail.com	2024-01-13 20:16:43.74	2024-01-13 20:16:43.74	+12125550151	America/New_York
+5ca1cf94-e694-4a51-a92d-602e1344c967	Adelbert	Lesch	Sammy.Gislason43@yahoo.com	2024-11-12 10:41:53.512	2024-11-12 10:41:53.512	+16025550197	America/Phoenix
+7f275266-00be-4238-8490-4fde9bb08c6b	Barton	Schowalter	Beatrice.Zulauf90@hotmail.com	2024-11-24 19:26:10.242	2024-11-24 19:26:10.242	+13175550172	America/Indiana/Indianapolis
+dafeed35-f575-4a6a-a5cd-78ddb932241f	Talia	O'Connell	Ansel.Schoen58@hotmail.com	2023-06-04 08:48:13.673	2023-06-04 08:48:13.673	+12125550161	America/New_York
+d954f09c-0c12-4933-9fc5-bc431398d757	Hailee	Stroman	Aliza75@gmail.com	2022-10-19 02:58:56.439	2022-10-19 02:58:56.439	+12125550153	America/New_York
+af2c24b4-f1b1-4e24-bf06-ccaee9b66a1f	Hermann	Altenwerth-Hoppe	Maggie.Gottlieb10@hotmail.com	2024-08-05 23:28:27.605	2024-08-05 23:28:27.605	+13175550177	America/Indiana/Indianapolis
 \.
 
 
@@ -576,7 +579,7 @@ d13f6ac5-2845-4afd-af07-7ded8832be10	Software Engineer	Taking down production	20
 -- Data for Name: candidates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.candidates (id, "firstName", "lastName", email, "createdAt", "updatedAt", "remoteId", "phoneNumber") FROM stdin;
+COPY public.candidates (id, "firstName", "lastName", email, "createdAt", "updatedAt", "remoteId", "phoneNumber", timezone) FROM stdin;
 \.
 
 

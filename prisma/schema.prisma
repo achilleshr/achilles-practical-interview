@@ -75,6 +75,8 @@ model RemoteCandidate {
   email     String
 
   phoneNumber String
+  // IANA time zone, e.g. "America/Chicago". Null when unknown.
+  timezone    String?
 
   remoteApplications RemoteApplication[]
 
@@ -132,6 +134,8 @@ model Candidate {
   remoteId  String?
 
   phoneNumber String
+  // IANA time zone, e.g. "America/Chicago". Null when unknown.
+  timezone    String?
 
   applications Application[]
 

@@ -60,6 +60,7 @@ export class SyncService {
         lastName: remoteCandidate.lastName,
         email: remoteCandidate.email,
         phoneNumber: remoteCandidate.phoneNumber,
+        timezone: remoteCandidate.timezone,
       })),
     })
     await Promise.all(
@@ -71,6 +72,7 @@ export class SyncService {
             lastName: remote.lastName,
             email: remote.email,
             phoneNumber: remote.phoneNumber,
+            timezone: remote.timezone,
           },
         })
       }),

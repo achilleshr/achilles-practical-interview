@@ -75,6 +75,8 @@ model RemoteCandidate {
   email     String
 
   phoneNumber String
+  // IANA time zone, e.g. "America/Chicago". Null when unknown.
+  timezone    String?
 
   remoteApplications RemoteApplication[]
 
@@ -95,6 +97,9 @@ model Job {
   company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   applications Application[]
 
+  locationId String
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
   @@unique([remoteId])
   @@map("jobs")
 }
@@ -113,6 +118,8 @@ model Application {
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
+  interviews Interview[]
+
   @@unique([remoteId])
   @@unique([candidateId, jobId])
   @@map("applications")
@@ -129,8 +136,12 @@ model Candidate {
   remoteId  String?
 
   phoneNumber String
+  // IANA time zone, e.g. "America/Chicago". Null when unknown.
+  timezone    String?
 
   applications Application[]
+
+  interviews Interview[]
 
   @@unique([remoteId])
   @@map("candidates")
@@ -145,5 +156,46 @@ model Company {
 
   jobs Job[]
 
+  locations Location[]
+
   @@map("companies")
+}
+
+// A physical site where candidates interview and work.
+model Location {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  address     String
+  // IANA time zone, e.g. "America/Chicago".
+  timezone    String
+  // E.164 number that texts about this location are sent from.
+  phoneNumber String
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  jobs Job[]
+
+  @@unique([phoneNumber])
+  @@map("locations")
+}
+
+model Interview {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // When the interview starts, in UTC.
+  startsAt DateTime
+
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@map("interviews")
 }

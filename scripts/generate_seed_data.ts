@@ -16,10 +16,28 @@ import { addMonths } from 'date-fns'
 
 const prisma = new PrismaClient()
 
-// Fictional numbers in the reserved 555-0100 to 555-0199 range, in E.164.
-const AREA_CODES = ['212', '214', '303', '312', '317', '404', '415', '602']
-const fakePhoneNumber = () =>
-  `+1${faker.helpers.arrayElement(AREA_CODES)}55501${faker.string.numeric(2)}`
+// Fictional numbers in the reserved 555-0100 to 555-0199 range, in E.164,
+// with the time zone of their area code.
+const AREA_CODE_TIMEZONES: Record<string, string> = {
+  '212': 'America/New_York',
+  '214': 'America/Chicago',
+  '303': 'America/Denver',
+  '312': 'America/Chicago',
+  '317': 'America/Indiana/Indianapolis',
+  '404': 'America/New_York',
+  '415': 'America/Los_Angeles',
+  '602': 'America/Phoenix',
+}
+const fakeContact = () => {
+  const areaCode = faker.helpers.objectKey(AREA_CODE_TIMEZONES)
+  return {
+    phoneNumber: `+1${areaCode}55501${faker.string.numeric(2)}`,
+    // About a quarter of candidates have no known time zone.
+    timezone: faker.datatype.boolean(0.75)
+      ? AREA_CODE_TIMEZONES[areaCode]
+      : null,
+  }
+}
 
 async function seedAtsData() {
   const createdAt1 = faker.date.past({ years: 3 })
@@ -59,7 +77,7 @@ async function seedAtsData() {
           firstName: faker.person.firstName(),
           lastName: faker.person.lastName(),
           email: faker.internet.email(),
-          phoneNumber: fakePhoneNumber(),
+          ...fakeContact(),
           createdAt,
           updatedAt: createdAt,
         },
@@ -99,8 +117,40 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
     data: { name: 'AchillesHR', createdAt, updatedAt: createdAt },
   })
 
+  const locations = await Promise.all(
+    [
+      {
+        name: 'AchillesHR - New York',
+        address: '100 Broadway, New York, NY 10005',
+        timezone: 'America/New_York',
+        phoneNumber: '+16465550100',
+      },
+      {
+        name: 'AchillesHR - Chicago',
+        address: '200 W Madison St, Chicago, IL 60606',
+        timezone: 'America/Chicago',
+        phoneNumber: '+17735550100',
+      },
+      {
+        name: 'AchillesHR - Phoenix',
+        address: '300 N Central Ave, Phoenix, AZ 85004',
+        timezone: 'America/Phoenix',
+        phoneNumber: '+14805550100',
+      },
+    ].map((location) =>
+      prisma.location.create({
+        data: {
+          ...location,
+          companyId: company.id,
+          createdAt,
+          updatedAt: createdAt,
+        },
+      }),
+    ),
+  )
+
   const jobs = await Promise.all(
-    atsJobs.map((job) =>
+    atsJobs.map((job, i) =>
       prisma.job.create({
         data: {
           description: job.description,
@@ -108,6 +158,7 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
           createdAt: addMonths(createdAt, 3),
           updatedAt: addMonths(createdAt, 3),
           companyId: company.id,
+          locationId: locations[i % locations.length].id,
           remoteId: job.id,
         },
       }),
@@ -119,6 +170,7 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
 
 async function seed() {
   // delete all existing data
+  await prisma.interview.deleteMany()
   await prisma.company.deleteMany()
   await prisma.job.deleteMany()
   await prisma.candidate.deleteMany()

@@ -32,6 +32,7 @@ EXPECTED_TABLES = [
     "applications",
     "locations",
     "interviews",
+    "sms_provider_messages",
     "ats_jobs",
     "ats_candidates",
     "ats_applications",

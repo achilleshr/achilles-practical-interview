@@ -70,6 +70,18 @@ CREATE TYPE public."RemoteApplicationStatus" AS ENUM (
 
 ALTER TYPE public."RemoteApplicationStatus" OWNER TO postgres;
 
+--
+-- Name: SmsProviderMessageStatus; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public."SmsProviderMessageStatus" AS ENUM (
+    'DELIVERED',
+    'FAILED'
+);
+
+
+ALTER TYPE public."SmsProviderMessageStatus" OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -244,6 +256,23 @@ CREATE TABLE public.locations (
 ALTER TABLE public.locations OWNER TO postgres;
 
 --
+-- Name: sms_provider_messages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sms_provider_messages (
+    id text NOT NULL,
+    "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "updatedAt" timestamp(3) without time zone NOT NULL,
+    "from" text NOT NULL,
+    "to" text NOT NULL,
+    body text NOT NULL,
+    status public."SmsProviderMessageStatus" NOT NULL
+);
+
+
+ALTER TABLE public.sms_provider_messages OWNER TO postgres;
+
+--
 -- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -255,6 +284,7 @@ d262084e-4c11-441c-b69e-51474dd02538	50993d8635c2899e57a383ea5dbf0c4be4ab3950823
 7c689895-7e60-41cd-befc-60351de343b6	2c9a9943205de097284cb428266efd71f4674a4e556f505c208510b01de2ab5b	2026-11-16 23:53:03.773869+00	20261117000000_add_locations		\N	2026-11-16 23:53:03.773869+00	0
 d082852b-0897-460e-8226-1472e45d55f6	adf3cfdd99899d1143076921e096de2d9a627aae93e38c0a8e2424d02522e82e	2026-11-16 23:54:07.655555+00	20261117000100_add_candidate_timezone		\N	2026-11-16 23:54:07.655555+00	0
 8209c104-04ed-468f-beee-da9e9873579e	b154f3acc1d4517f8805bff6cf1534df7560d01e626ff8992184bf5386f65e69	2026-11-16 23:54:38.398267+00	20261117000200_add_interviews		\N	2026-11-16 23:54:38.398267+00	0
+cf0391c7-85c4-44c7-81b2-b8311258a66a	0033a5d3a0a8fd5e1c507ce974630e870025ae78948734d2fa97e2ead9b16eed	2026-11-17 00:40:51.929432+00	20261117010000_add_sms_provider_messages		\N	2026-11-17 00:40:51.929432+00	0
 \.
 
 
@@ -715,6 +745,14 @@ a7c2394e-ab32-4bd7-8708-618a16d940c6	2025-01-26 14:39:35.042	2025-01-26 14:39:35
 
 
 --
+-- Data for Name: sms_provider_messages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sms_provider_messages (id, "createdAt", "updatedAt", "from", "to", body, status) FROM stdin;
+\.
+
+
+--
 -- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -792,6 +830,14 @@ ALTER TABLE ONLY public.jobs
 
 ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sms_provider_messages sms_provider_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sms_provider_messages
+    ADD CONSTRAINT sms_provider_messages_pkey PRIMARY KEY (id);
 
 
 --

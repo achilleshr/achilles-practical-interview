@@ -150,6 +150,7 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
 
 async function seed() {
   // delete all existing data
+  await prisma.smsProviderMessage.deleteMany()
   await prisma.interview.deleteMany()
   await prisma.company.deleteMany()
   await prisma.job.deleteMany()

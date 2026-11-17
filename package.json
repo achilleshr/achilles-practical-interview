@@ -15,7 +15,8 @@
     "pg:seed": "./scripts/seed_db",
     "verify": "python3 scripts/verify.py",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest"
+    "test": "jest",
+    "interviews:sample": "ts-node --transpile-only scripts/create_sample_interviews.ts"
   },
   "dependencies": {
     "@date-fns/tz": "1.2.0",

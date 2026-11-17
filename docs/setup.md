@@ -20,6 +20,11 @@ postgresql://postgres:postgres@postgres/postgres?sslmode=disable
 This is already set as `DATABASE_URL` in `.env`. The `postgres` host resolves to
 localhost inside the container.
 
+## API docs (Swagger)
+
+With the app running (`pnpm start`), open [http://localhost:8080/api](http://localhost:8080/api)
+to see every endpoint and call it from the browser.
+
 ## App layout
 
 | Folder            | Purpose                                                                                                                                                                                                                                           | Key contents                                                         |

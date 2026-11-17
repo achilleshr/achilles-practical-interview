@@ -1,6 +1,8 @@
 # Challenge: Interview reminders
 
-See [setup](setup.md) for getting the app running.
+1. See [setup](setup.md) for getting the app running.
+2. Download [vs-code](https://code.visualstudio.com/)and install
+3. Create a codespace on github and connect vs-code to it
 
 ## How the session works
 

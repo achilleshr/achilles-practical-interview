@@ -8,7 +8,7 @@
  * Day to day, use `pnpm pg:seed` to restore the deterministic snapshot instead —
  * running this replaces the fixture with different random data.
  *
- *   npx tsx scripts/generate_seed_data.ts
+ *   npx ts-node scripts/generate_seed_data.ts
  */
 import { faker } from '@faker-js/faker'
 import { PrismaClient, RemoteApplicationStatus, RemoteJob } from '@prisma/client'

@@ -59,6 +59,7 @@ reachable and seeded. It should report all checks passing.
 | `pnpm prisma:generate` | Regenerates the Prisma client from `prisma/schema.prisma`. Run after changing the schema. |
 | `pnpm prisma:migrate` | Creates and applies a new migration from schema changes, and regenerates the client. |
 | `pnpm lint` | Runs ESLint across the source and auto-fixes issues. |
+| `pnpm test` | Runs the tests (`src/**/*.spec.ts`) with Jest, against the dev database. See `src/sms/sms-provider.spec.ts` for an example. |
 | `pnpm format` | Reformats the source with Prettier. |
 
 **Database connection**

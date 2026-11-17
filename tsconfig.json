@@ -21,7 +21,7 @@
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "types": ["node"],
+    "types": ["node", "jest"],
     "target": "ES2022"
   }
 }

@@ -7,6 +7,9 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "remoteUser": "node",
   "overrideCommand": true,
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
   "forwardPorts": [8080, 5432],
   "portsAttributes": {
     "8080": { "label": "NestJS app" },
@@ -25,7 +28,6 @@
         "prisma.prisma",
         "cweijan.vscode-database-client2",
         "Anthropic.claude-code",
-        "dbaeumer.vscode-eslint",
         "yzhang.markdown-all-in-one",
         "cweijan.dbclient-jdbc"
       ]

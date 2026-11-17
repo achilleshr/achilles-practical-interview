@@ -1,5 +1,6 @@
 /**
- * Creates sample interviews, relative to now, through POST /v1/interviews.
+ * Creates sample interviews, relative to now, through
+ * POST /v1/candidates/create-interview.
  * The app must be running (pnpm start). `pnpm pg:seed` clears them.
  *
  *   pnpm interviews:sample
@@ -17,11 +18,14 @@ function localTime(timezone: string, daysFromToday: number, hour: number) {
 }
 
 async function createInterview(applicationId: string, startsAt: Date) {
-  const response = await fetch('http://localhost:8080/v1/interviews', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ applicationId, startsAt }),
-  })
+  const response = await fetch(
+    'http://localhost:8080/v1/candidates/create-interview',
+    {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ applicationId, startsAt }),
+    },
+  )
   console.log(response.status, await response.text())
 }
 

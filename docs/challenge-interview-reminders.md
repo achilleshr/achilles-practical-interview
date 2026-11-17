@@ -57,6 +57,6 @@ The data model is in `prisma/schema.prisma`.
   - `getStatus(ids)` returns `QUEUED`, `DELIVERED`, or `FAILED` for each ID, in the same order.
   - `failNext()` makes the next send fail, and `failureRate` can be changed.
 - **`CandidatesService`** (`src/candidates/candidates.service.ts`)
-  - `createInterview` creates an interview. It's behind `POST /v1/interviews`. `pnpm interviews:sample` creates a few through it.
-  - `handleEvent` receives `candidate.opted_out` and `candidate.opted_in` events, each with a candidate ID. It's behind `POST /v1/events`, and it currently does nothing with them.
+  - `createInterview` creates an interview. It's behind `POST /v1/candidates/create-interview`. `pnpm interviews:sample` creates a few through it.
+  - `handleEvent` receives `candidate.opted_out` and `candidate.opted_in` events, each with a candidate ID. It's behind `POST /v1/candidates/handle-event`, and it currently does nothing with them.
 - **Tests:** `pnpm test` runs them. `src/sms/sms-provider.spec.ts` is an example.

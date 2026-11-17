@@ -14,30 +14,10 @@ import { faker } from '@faker-js/faker'
 import { PrismaClient, RemoteApplicationStatus, RemoteJob } from '@prisma/client'
 import { addMonths } from 'date-fns'
 
-const prisma = new PrismaClient()
+import { fakeContact } from './fake_contact'
+import { generateDirectApplicants } from './generate_direct_applicants'
 
-// Fictional numbers in the reserved 555-0100 to 555-0199 range, in E.164,
-// with the time zone of their area code.
-const AREA_CODE_TIMEZONES: Record<string, string> = {
-  '212': 'America/New_York',
-  '214': 'America/Chicago',
-  '303': 'America/Denver',
-  '312': 'America/Chicago',
-  '317': 'America/Indiana/Indianapolis',
-  '404': 'America/New_York',
-  '415': 'America/Los_Angeles',
-  '602': 'America/Phoenix',
-}
-const fakeContact = () => {
-  const areaCode = faker.helpers.objectKey(AREA_CODE_TIMEZONES)
-  return {
-    phoneNumber: `+1${areaCode}55501${faker.string.numeric(2)}`,
-    // About a quarter of candidates have no known time zone.
-    timezone: faker.datatype.boolean(0.75)
-      ? AREA_CODE_TIMEZONES[areaCode]
-      : null,
-  }
-}
+const prisma = new PrismaClient()
 
 async function seedAtsData() {
   const createdAt1 = faker.date.past({ years: 3 })
@@ -77,7 +57,7 @@ async function seedAtsData() {
           firstName: faker.person.firstName(),
           lastName: faker.person.lastName(),
           email: faker.internet.email(),
-          ...fakeContact(),
+          ...fakeContact(faker),
           createdAt,
           updatedAt: createdAt,
         },
@@ -165,7 +145,7 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
     ),
   )
 
-  return { jobs, company }
+  return { jobs, company, locations }
 }
 
 async function seed() {
@@ -180,7 +160,8 @@ async function seed() {
   await prisma.remoteApplication.deleteMany()
 
   const atsData = await seedAtsData()
-  await seedCompanyData(atsData)
+  const { company, locations } = await seedCompanyData(atsData)
+  await generateDirectApplicants(prisma, { companyId: company.id, locations })
 }
 
 seed()

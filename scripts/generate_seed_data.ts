@@ -15,6 +15,7 @@ import { PrismaClient, RemoteApplicationStatus, RemoteJob } from '@prisma/client
 import { addMonths } from 'date-fns'
 
 import { fakeContact } from './fake_contact'
+import { generateDirectApplicants } from './generate_direct_applicants'
 
 const prisma = new PrismaClient()
 
@@ -144,7 +145,7 @@ async function seedCompanyData({ atsJobs }: { atsJobs: RemoteJob[] }) {
     ),
   )
 
-  return { jobs, company }
+  return { jobs, company, locations }
 }
 
 async function seed() {
@@ -159,7 +160,8 @@ async function seed() {
   await prisma.remoteApplication.deleteMany()
 
   const atsData = await seedAtsData()
-  await seedCompanyData(atsData)
+  const { company, locations } = await seedCompanyData(atsData)
+  await generateDirectApplicants(prisma, { companyId: company.id, locations })
 }
 
 seed()

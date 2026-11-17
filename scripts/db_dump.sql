@@ -263,6 +263,44 @@ d082852b-0897-460e-8226-1472e45d55f6	adf3cfdd99899d1143076921e096de2d9a627aae93e
 --
 
 COPY public.applications (id, "createdAt", "updatedAt", "remoteId", "candidateId", "jobId", status) FROM stdin;
+67227952-5cff-4688-8c5b-88dd7db447f7	2026-10-17 15:00:00	2026-10-17 15:00:00	\N	64fa357b-2594-4205-ab77-cb0f6401eca9	e357c0ab-55be-40d6-bf9f-dbbee786abe6	INTERVIEWING
+8ea8c9ff-b72d-460d-b9ef-eaf44d7e10bc	2026-10-18 15:00:00	2026-10-18 15:00:00	\N	64fa357b-2594-4205-ab77-cb0f6401eca9	f4acf952-3628-4495-98d2-eda4208f8704	APPLIED
+45df89d4-8c47-4c8e-9655-87df9a2ed7fe	2026-10-23 03:00:00	2026-10-23 03:00:00	\N	84934b1f-2175-4e93-a44c-b3fe11347367	f4acf952-3628-4495-98d2-eda4208f8704	APPLIED
+e09a06c8-9b23-4c13-ba35-90a13233b4cc	2026-10-24 03:00:00	2026-10-24 03:00:00	\N	84934b1f-2175-4e93-a44c-b3fe11347367	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	INTERVIEWING
+5a3b5041-2bc4-4792-819f-ecf516159620	2026-10-22 16:00:00	2026-10-22 16:00:00	\N	00bcf076-8cd9-45f9-a838-5231766c9815	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	INTERVIEWING
+572c4cde-1b5a-468a-bc82-609efe671257	2026-10-23 16:00:00	2026-10-23 16:00:00	\N	00bcf076-8cd9-45f9-a838-5231766c9815	1a4574ee-12df-4791-aad7-05d50eb67af7	APPLIED
+2e57a051-d995-4010-9659-1bdef92e0c3c	2026-10-05 23:00:00	2026-10-05 23:00:00	\N	7ea5e286-e56b-4810-8266-fdba9090bb56	fb3d8ece-dab7-4540-a0cc-819cb1cdf6f8	INTERVIEWING
+035e302b-5845-4f5d-9b7e-4180f81e7509	2026-10-06 23:00:00	2026-10-06 23:00:00	\N	7ea5e286-e56b-4810-8266-fdba9090bb56	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	APPLIED
+a2ccf790-f875-44fb-9173-c7731a3efb19	2026-10-06 02:00:00	2026-10-06 02:00:00	\N	0577d78c-7701-432a-a394-6f47e76a8626	1a4574ee-12df-4791-aad7-05d50eb67af7	APPLIED
+c4754cb6-74bd-4727-bf0d-a40ea4321e08	2026-10-07 02:00:00	2026-10-07 02:00:00	\N	0577d78c-7701-432a-a394-6f47e76a8626	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	APPLIED
+338a3d73-b241-4686-a345-14d75f4bc863	2026-10-01 16:00:00	2026-10-01 16:00:00	\N	79a06869-b71e-4f4c-8e8a-0f2fefb2a9a8	6264d6b0-3010-45c9-96a5-2b333e096695	INTERVIEWING
+160974f2-470c-405d-a1e5-1d4c7782ebea	2026-10-02 16:00:00	2026-10-02 16:00:00	\N	79a06869-b71e-4f4c-8e8a-0f2fefb2a9a8	1a4574ee-12df-4791-aad7-05d50eb67af7	APPLIED
+3fdf23cd-290d-414b-bcbb-ed5b02c21496	2026-10-31 07:00:00	2026-10-31 07:00:00	\N	aaece315-704a-4a27-b290-399c5de43dbc	e357c0ab-55be-40d6-bf9f-dbbee786abe6	APPLIED
+ebd5a634-b099-4042-a16f-ba794293ab77	2026-10-06 11:00:00	2026-10-06 11:00:00	\N	bd1e3bed-8ab6-4c4e-93ca-d6f1bc9e1769	f4acf952-3628-4495-98d2-eda4208f8704	APPLIED
+c26c6487-3ece-45bd-a82e-a961ab4e8db7	2026-10-17 19:00:00	2026-10-17 19:00:00	\N	937807ea-0007-4edd-87d3-a755965a628a	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	INTERVIEWING
+6aaa2481-3ac6-4aac-b5ab-735dc6de4604	2026-10-09 11:00:00	2026-10-09 11:00:00	\N	e8262b93-c486-47d5-964b-945050c4c9c6	fb3d8ece-dab7-4540-a0cc-819cb1cdf6f8	APPLIED
+d132dea3-5431-4781-b397-c068d48b02b1	2026-10-27 16:00:00	2026-10-27 16:00:00	\N	778e0254-da58-4c43-ba60-36551dc51d82	1a4574ee-12df-4791-aad7-05d50eb67af7	APPLIED
+2025ca3f-7eaa-4c13-9f77-cf6201e1ed75	2026-10-21 06:00:00	2026-10-21 06:00:00	\N	c3cd9a6f-d25d-4393-b394-c68fc0cf2911	6264d6b0-3010-45c9-96a5-2b333e096695	APPLIED
+d0d1dcb4-d866-40b7-bf4d-af70de83fb33	2026-10-26 20:00:00	2026-10-26 20:00:00	\N	a19cf4e9-feb0-497a-9012-c8c72aea511b	e357c0ab-55be-40d6-bf9f-dbbee786abe6	APPLIED
+e4506aa4-c075-4c76-b688-7c44ebf4129f	2026-10-13 17:00:00	2026-10-13 17:00:00	\N	f4743cca-c757-4048-8585-ad2a211c47e2	f4acf952-3628-4495-98d2-eda4208f8704	APPLIED
+0783cee9-0a07-477e-86d8-4bbcd9512135	2026-10-19 22:00:00	2026-10-19 22:00:00	\N	04686798-168e-467a-8760-b555a21019ba	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	INTERVIEWING
+88602ef2-6655-4d3c-ac3a-9cef10b458b2	2026-10-11 01:00:00	2026-10-11 01:00:00	\N	818316ff-1482-4ca7-8a34-557a6c4d6b1d	fb3d8ece-dab7-4540-a0cc-819cb1cdf6f8	INTERVIEWING
+71e31acd-3203-45d9-9bf2-f464462ddcd0	2026-10-25 06:00:00	2026-10-25 06:00:00	\N	5362e419-0224-4a75-a186-ee91d957a87f	1a4574ee-12df-4791-aad7-05d50eb67af7	APPLIED
+ba051b90-733a-480e-a61d-afd1a9c66f3b	2026-10-04 07:00:00	2026-10-04 07:00:00	\N	60525a8c-ce1e-4842-ab32-a6080aad0d97	6264d6b0-3010-45c9-96a5-2b333e096695	INTERVIEWING
+56ea00a7-b8f6-4931-bf23-8c5eef3f87c3	2026-10-04 07:00:00	2026-10-04 07:00:00	\N	c0ebb66d-1035-4507-aef1-538b6a9aa4b0	e357c0ab-55be-40d6-bf9f-dbbee786abe6	APPLIED
+d69f9257-e895-44e5-8783-06b940eb8b05	2026-10-17 04:00:00	2026-10-17 04:00:00	\N	805ca435-cd90-4fc6-8e00-6a81107b91ea	f4acf952-3628-4495-98d2-eda4208f8704	INTERVIEWING
+2b79bab2-7d8f-4a7d-a65d-d5fbb9c66512	2026-10-05 08:00:00	2026-10-05 08:00:00	\N	e84fd3fa-69f5-4b07-9aaf-3f6826fc4d1c	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	APPLIED
+fbaa02af-0922-44ad-bcf3-1ee5e4b85f69	2026-10-27 03:00:00	2026-10-27 03:00:00	\N	87e838ab-9919-4718-88fc-ac76e977f2cf	fb3d8ece-dab7-4540-a0cc-819cb1cdf6f8	INTERVIEWING
+98745437-1d69-4aed-9ebf-c2dae091f51f	2026-10-02 14:00:00	2026-10-02 14:00:00	\N	6881cdaf-92ad-44c4-88eb-b395d12dca29	1a4574ee-12df-4791-aad7-05d50eb67af7	APPLIED
+11e5be16-758e-4357-a357-b67151d29d07	2026-10-01 19:00:00	2026-10-01 19:00:00	\N	bc824a8f-8e98-4c4d-8679-ceeec6415b48	6264d6b0-3010-45c9-96a5-2b333e096695	APPLIED
+ce1df224-3099-4e9c-8d27-a6af20f5a979	2026-10-22 01:00:00	2026-10-22 01:00:00	\N	5d7a5ba6-5c3f-453d-b53d-6d0b21e72a7c	e357c0ab-55be-40d6-bf9f-dbbee786abe6	APPLIED
+9516d37f-04cd-485e-b1a8-ff5853da2903	2026-10-18 05:00:00	2026-10-18 05:00:00	\N	d2ccd929-5b46-467c-9632-4320c0b823be	f4acf952-3628-4495-98d2-eda4208f8704	APPLIED
+82ed941e-0cee-4215-a0b4-30a92747fd86	2026-10-03 12:00:00	2026-10-03 12:00:00	\N	5a6dec9c-b5c1-47ea-98c5-cb9046ce80f9	2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	INTERVIEWING
+d0e4f38a-ef23-4811-9f5d-fc4b736d8d48	2026-10-13 10:00:00	2026-10-13 10:00:00	\N	0ea779bc-d8ad-4db1-9ade-7ff8b7dd37af	fb3d8ece-dab7-4540-a0cc-819cb1cdf6f8	INTERVIEWING
+ec3317e8-0155-468e-848f-5aeccdc18630	2026-10-02 08:00:00	2026-10-02 08:00:00	\N	8a79bcae-3a03-4ff0-8c87-26b757bc9d03	1a4574ee-12df-4791-aad7-05d50eb67af7	INTERVIEWING
+fe1fac3d-0b16-4dd7-af9f-945e46570dfb	2026-10-11 21:00:00	2026-10-11 21:00:00	\N	148b8bbe-22bb-4d5a-9a35-f608cce829b0	6264d6b0-3010-45c9-96a5-2b333e096695	INTERVIEWING
+03754a24-ee6a-4d1f-aa77-7ebd38b7fac4	2026-10-21 03:00:00	2026-10-21 03:00:00	\N	64658bd3-93cb-4bf7-be4d-9066c237eefa	e357c0ab-55be-40d6-bf9f-dbbee786abe6	APPLIED
+fb73b833-fd73-42c2-bda7-bf1689fdb4e2	2026-10-28 07:00:00	2026-10-28 07:00:00	\N	bf590c41-bd68-4640-9253-759364689f4a	f4acf952-3628-4495-98d2-eda4208f8704	INTERVIEWING
 \.
 
 
@@ -597,6 +635,38 @@ d13f6ac5-2845-4afd-af07-7ded8832be10	Software Engineer	Taking down production	20
 --
 
 COPY public.candidates (id, "firstName", "lastName", email, "createdAt", "updatedAt", "remoteId", "phoneNumber", timezone) FROM stdin;
+64fa357b-2594-4205-ab77-cb0f6401eca9	Cecilia	Gleason	cecilia_gleason52@example.com	2026-10-17 15:00:00	2026-10-17 15:00:00	\N	+12145550149	America/Chicago
+84934b1f-2175-4e93-a44c-b3fe11347367	Cole	Franecki	cole.franecki@example.com	2026-10-23 03:00:00	2026-10-23 03:00:00	\N	+12125550104	America/New_York
+00bcf076-8cd9-45f9-a838-5231766c9815	Samantha	Metz	samantha.metz@example.com	2026-10-22 16:00:00	2026-10-22 16:00:00	\N	+13175550174	America/Indiana/Indianapolis
+7ea5e286-e56b-4810-8266-fdba9090bb56	Claudine	Auer	claudine_auer@example.com	2026-10-05 23:00:00	2026-10-05 23:00:00	\N	+12145550121	\N
+0577d78c-7701-432a-a394-6f47e76a8626	Samir	Kemmer	samir.kemmer21@example.com	2026-10-06 02:00:00	2026-10-06 02:00:00	\N	+14045550176	America/New_York
+79a06869-b71e-4f4c-8e8a-0f2fefb2a9a8	Virginie	Feeney	virginie.feeney65@example.com	2026-10-01 16:00:00	2026-10-01 16:00:00	\N	+13035550100	America/Denver
+aaece315-704a-4a27-b290-399c5de43dbc	Lacy	Little	lacy.little@example.com	2026-10-31 07:00:00	2026-10-31 07:00:00	\N	+12145550156	America/Chicago
+bd1e3bed-8ab6-4c4e-93ca-d6f1bc9e1769	Eulah	Kutch	eulah.kutch48@example.com	2026-10-06 11:00:00	2026-10-06 11:00:00	\N	+12125550133	\N
+937807ea-0007-4edd-87d3-a755965a628a	Liana	Donnelly	liana.donnelly@example.com	2026-10-17 19:00:00	2026-10-17 19:00:00	\N	+12125550152	America/New_York
+e8262b93-c486-47d5-964b-945050c4c9c6	Selina	Leffler	selina.leffler@example.com	2026-10-09 11:00:00	2026-10-09 11:00:00	\N	+12145550125	America/Chicago
+778e0254-da58-4c43-ba60-36551dc51d82	Elenor	Armstrong	elenor_armstrong91@example.com	2026-10-27 16:00:00	2026-10-27 16:00:00	\N	+12125550100	America/New_York
+c3cd9a6f-d25d-4393-b394-c68fc0cf2911	Freida	Schultz	freida_schultz@example.com	2026-10-21 06:00:00	2026-10-21 06:00:00	\N	+12145550131	\N
+a19cf4e9-feb0-497a-9012-c8c72aea511b	Margarette	Goodwin	margarette_goodwin62@example.com	2026-10-26 20:00:00	2026-10-26 20:00:00	\N	+12145550136	America/Chicago
+f4743cca-c757-4048-8585-ad2a211c47e2	Cedrick	Hayes-Ryan	cedrick.hayes-ryan29@example.com	2026-10-13 17:00:00	2026-10-13 17:00:00	\N	+14045550133	America/New_York
+04686798-168e-467a-8760-b555a21019ba	Elaina	Hintz	elaina_hintz92@example.com	2026-10-19 22:00:00	2026-10-19 22:00:00	\N	+14155550159	America/Los_Angeles
+818316ff-1482-4ca7-8a34-557a6c4d6b1d	Ned	Leannon	ned.leannon@example.com	2026-10-11 01:00:00	2026-10-11 01:00:00	\N	+12145550164	\N
+5362e419-0224-4a75-a186-ee91d957a87f	Dashawn	Nikolaus	dashawn_nikolaus@example.com	2026-10-25 06:00:00	2026-10-25 06:00:00	\N	+12125550118	America/New_York
+60525a8c-ce1e-4842-ab32-a6080aad0d97	Duane	Witting	duane_witting36@example.com	2026-10-04 07:00:00	2026-10-04 07:00:00	\N	+13125550168	America/Chicago
+c0ebb66d-1035-4507-aef1-538b6a9aa4b0	Johann	West	johann_west@example.com	2026-10-04 07:00:00	2026-10-04 07:00:00	\N	+13125550159	America/Chicago
+805ca435-cd90-4fc6-8e00-6a81107b91ea	Fannie	Bruen	fannie.bruen@example.com	2026-10-17 04:00:00	2026-10-17 04:00:00	\N	+14045550170	\N
+e84fd3fa-69f5-4b07-9aaf-3f6826fc4d1c	Quentin	Morar	quentin_morar0@example.com	2026-10-05 08:00:00	2026-10-05 08:00:00	\N	+13125550148	America/Chicago
+87e838ab-9919-4718-88fc-ac76e977f2cf	Conner	Kuhic	conner_kuhic69@example.com	2026-10-27 03:00:00	2026-10-27 03:00:00	\N	+12145550129	America/Chicago
+6881cdaf-92ad-44c4-88eb-b395d12dca29	Cordie	Kuhn	cordie_kuhn@example.com	2026-10-02 14:00:00	2026-10-02 14:00:00	\N	+12125550182	America/New_York
+bc824a8f-8e98-4c4d-8679-ceeec6415b48	Jayne	Cruickshank	jayne_cruickshank81@example.com	2026-10-01 19:00:00	2026-10-01 19:00:00	\N	+14045550130	\N
+5d7a5ba6-5c3f-453d-b53d-6d0b21e72a7c	Marley	Rolfson	marley.rolfson@example.com	2026-10-22 01:00:00	2026-10-22 01:00:00	\N	+13125550102	America/Chicago
+d2ccd929-5b46-467c-9632-4320c0b823be	Aylin	Altenwerth-Lind	aylin.altenwerth-lind@example.com	2026-10-18 05:00:00	2026-10-18 05:00:00	\N	+12125550122	America/New_York
+5a6dec9c-b5c1-47ea-98c5-cb9046ce80f9	Alex	Ullrich	alex_ullrich@example.com	2026-10-03 12:00:00	2026-10-03 12:00:00	\N	+14155550196	America/Los_Angeles
+0ea779bc-d8ad-4db1-9ade-7ff8b7dd37af	Rosendo	Erdman	rosendo.erdman90@example.com	2026-10-13 10:00:00	2026-10-13 10:00:00	\N	+12145550128	\N
+8a79bcae-3a03-4ff0-8c87-26b757bc9d03	Lorna	Effertz	lorna.effertz48@example.com	2026-10-02 08:00:00	2026-10-02 08:00:00	\N	+12125550134	America/New_York
+148b8bbe-22bb-4d5a-9a35-f608cce829b0	Cierra	Bechtelar	cierra_bechtelar66@example.com	2026-10-11 21:00:00	2026-10-11 21:00:00	\N	+13175550126	America/Indiana/Indianapolis
+64658bd3-93cb-4bf7-be4d-9066c237eefa	Jordan	Bartoletti	jordan_bartoletti7@example.com	2026-10-21 03:00:00	2026-10-21 03:00:00	\N	+13125550118	America/Chicago
+bf590c41-bd68-4640-9253-759364689f4a	Carlotta	Goodwin	carlotta_goodwin94@example.com	2026-10-28 07:00:00	2026-10-28 07:00:00	\N	+14045550148	\N
 \.
 
 
@@ -624,6 +694,12 @@ COPY public.interviews (id, "createdAt", "updatedAt", "startsAt", "candidateId",
 COPY public.jobs (id, title, description, "createdAt", "updatedAt", "remoteId", "companyId", "locationId") FROM stdin;
 8d62b44c-961e-44d7-8c71-a97065837da0	Software Engineer	Taking down production	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	d13f6ac5-2845-4afd-af07-7ded8832be10	820d85c8-278f-4201-8e9f-e43861ce6b9f	951cca43-cb1c-49ff-9bec-3f5c77b925eb
 9092b14b-3d0f-4400-a1dd-30cf0940bbde	Product Manager	Taking all the credit	2025-04-26 13:39:35.042	2025-04-26 13:39:35.042	2addd82d-e19d-4f4e-be40-838f61f9d087	820d85c8-278f-4201-8e9f-e43861ce6b9f	a7c2394e-ab32-4bd7-8708-618a16d940c6
+e357c0ab-55be-40d6-bf9f-dbbee786abe6	Warehouse Associate	Receive, stage, and load freight. Day and night shifts.	2026-09-01 15:00:00	2026-09-01 15:00:00	\N	820d85c8-278f-4201-8e9f-e43861ce6b9f	a7c2394e-ab32-4bd7-8708-618a16d940c6
+f4acf952-3628-4495-98d2-eda4208f8704	Forklift Operator	Operate sit-down and reach forklifts. Certification provided.	2026-09-02 15:00:00	2026-09-02 15:00:00	\N	820d85c8-278f-4201-8e9f-e43861ce6b9f	951cca43-cb1c-49ff-9bec-3f5c77b925eb
+2ade9b3a-e0c4-4ee7-ba65-84e4c40f4a23	Production Line Worker	Run and monitor packaging lines.	2026-09-03 15:00:00	2026-09-03 15:00:00	\N	820d85c8-278f-4201-8e9f-e43861ce6b9f	9a390e0e-a4fd-445b-ab34-defe53281f05
+fb3d8ece-dab7-4540-a0cc-819cb1cdf6f8	Machine Operator	Set up and operate mixing and filling equipment.	2026-09-04 15:00:00	2026-09-04 15:00:00	\N	820d85c8-278f-4201-8e9f-e43861ce6b9f	a7c2394e-ab32-4bd7-8708-618a16d940c6
+1a4574ee-12df-4791-aad7-05d50eb67af7	Picker/Packer	Pick, pack, and label outbound orders.	2026-09-05 15:00:00	2026-09-05 15:00:00	\N	820d85c8-278f-4201-8e9f-e43861ce6b9f	951cca43-cb1c-49ff-9bec-3f5c77b925eb
+6264d6b0-3010-45c9-96a5-2b333e096695	Shipping Clerk	Prepare shipping paperwork and schedule pickups.	2026-09-06 15:00:00	2026-09-06 15:00:00	\N	820d85c8-278f-4201-8e9f-e43861ce6b9f	9a390e0e-a4fd-445b-ab34-defe53281f05
 \.
 
 

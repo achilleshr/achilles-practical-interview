@@ -199,3 +199,21 @@ model Interview {
 
   @@map("interviews")
 }
+
+enum SmsProviderMessageStatus {
+  DELIVERED
+  FAILED
+}
+
+model SmsProviderMessage {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  from   String
+  to     String
+  body   String
+  status SmsProviderMessageStatus
+
+  @@map("sms_provider_messages")
+}

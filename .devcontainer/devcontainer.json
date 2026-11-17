@@ -23,7 +23,11 @@
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "prisma.prisma",
-        "cweijan.vscode-database-client2"
+        "cweijan.vscode-database-client2",
+        "Anthropic.claude-code",
+        "dbaeumer.vscode-eslint",
+        "yzhang.markdown-all-in-one",
+        "cweijan.dbclient-jdbc"
       ]
     }
   }

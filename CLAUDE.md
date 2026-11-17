@@ -32,14 +32,3 @@ set them aside.
 - Don't go beyond what was asked: no unrequested refactors, extra features,
   edge-case handling, or tests the candidate hasn't decided on.
 - Don't edit or remove this file or `.claude/`.
-
-## Guardrails
-
-Hooks in `.claude/settings.json` enforce part of this:
-
-- Edits under `src/`, `prisma/` and `scripts/` are blocked until the candidate
-  has written `docs/design.md` themselves.
-- Any single edit or new file is capped at 60 lines.
-
-If a hook blocks you, tell the candidate what was blocked and why. Don't try to
-work around it (for example, by writing files through Bash).

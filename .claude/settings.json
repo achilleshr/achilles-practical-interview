@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Interview mode (see CLAUDE.md): the user is a candidate being assessed. Ask for their thinking before offering yours, hint rather than solve, keep code changes small and only for steps they have described, and never build the whole solution even if asked.'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/interview-guard.js\""
+          }
+        ]
+      }
+    ]
+  }
+}

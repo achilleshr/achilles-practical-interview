@@ -7,8 +7,8 @@
 ## How the session works
 
 1. **Design (20 min).** Before writing code, write up to half a page covering your data model, how reminders get scheduled and sent, how you handle provider failures, what you think breaks first, and any questions you'd ask the product owner. Ask us those questions directly. We'll answer them.
-2. **Build (about 70 min).** Implement it. Please think out loud. We care more about your decisions than how much you finish. If you run short on time, get the rules above right before anything else.
-3. **Review (25 min).** We'll give you a pull request touching the same code to review.
+2. **Build (about 1 hour).** Implement it. Please think out loud. We care more about your decisions than how much you finish. If you run short on time, get the rules above right before anything else.
+3. **Review (30 min).** Present the code you wrote as a pull request to a new audience: we'll act as teammates who haven't seen it. Write the PR description, walk us through the diff, and expect questions and review comments. Then tell us what you would flag in your own change.
 4. **Debrief (15–20 min).** We'll walk through what you built.
 
 ## Background

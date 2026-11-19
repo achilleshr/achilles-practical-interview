@@ -8,7 +8,8 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
 - `type`: `HOURS_24` | `HOURS_2`.
 - `status`: `PENDING` → `SENT` (awaiting delivery status) → `DELIVERED`.
   `OPTED_OUT` when skipped because the candidate opted out. A failed delivery goes
-  back to `PENDING` for retry; `FAILED` once retries are exhausted.
+  `FAILED` (send threw, or provider reported failure); `FAILED` rows are resent by
+  the send worker until `retryCount` reaches 3, then left as `FAILED`.
 - `Candidate.smsOptedIn` (boolean, default `true`).
 
 - Linked to the **interview** (not the application), since an application can have
@@ -54,8 +55,17 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
   `FOR UPDATE SKIP LOCKED` and sets `lockedUntil` in the same `UPDATE ... RETURNING`
   (via `$queryRaw`). The transaction commits immediately; no lock or transaction is
   held during the SMS call. Lease (`lockedUntil`) is **10 seconds**.
-- **Send worker:** claims due `Pending` rows as above, sends from the interview
-  location's number, and stores the provider message ID.
+- **Send worker** (`src/notifications/send-worker.ts`): `setInterval` every 5s on
+  every instance. Claims **one row at a time, just before sending it** (lease
+  covers a single send), up to 100 rows per tick. Eligible rows are due and
+  `PENDING`, or `FAILED` with `retryCount < 3`.
+  - Candidate opted out → `OPTED_OUT`, lock cleared.
+  - Send succeeds → `SENT`, `providerMessageId` saved, lock cleared.
+  - Send throws → `FAILED`, lock cleared.
+  - `retryCount` is incremented only when the row being sent was `FAILED`.
+  - Message: "Reminder: your interview for {job} at {location} is {Thu, Nov 19 at
+    12:44 PM}. Address: {address}" — time in the location's timezone; same text
+    for both reminder types.
 - **Status worker:** polls the provider with `getStatus` for sent messages. Uses
   the same `lockedUntil` claim so a failure isn't counted (and retry count
   incremented) twice. On `FAILED`, the row is retried.
@@ -65,10 +75,21 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
 - **Out of scope — crash after send, before saving the message ID:** the lock
   expires and another worker can resend, producing a duplicate. Known risk, not
   handled.
-- **Batch size** for the claim: not chosen.
-- **10s lease vs. send duration:** if a send + DB write exceeds 10s, the lease
-  expires mid-send and another worker can resend.
-- **Max retries** before a row is marked `FAILED`: not chosen.
+- **Throughput:** each instance sends one row at a time (one claim query + one
+  send per row), so per-instance throughput is bounded by provider latency.
+  Not yet checked against the 8am peak.
+- **Out of scope — retries ignore quiet hours:** a `FAILED` row is resent on the
+  next tick regardless of local time. Shifted 2h reminders have a 30-min buffer
+  for this; unshifted reminders near 9:00pm (e.g. 8:50pm) do not.
+- **Retry spacing:** a `FAILED` row is re-claimed immediately (same tick), so a
+  provider outage can exhaust all 3 retries within milliseconds. Not decided:
+  backoff via `scheduleTime`, keep the lease as backoff, or accept immediate
+  retries. The test "marks the reminder failed when send throws" currently fails
+  because of this.
+- **Delivery status:** provider-reported `FAILED` is handled by the status
+  worker (next step).
+- **Overlapping ticks:** `setInterval` doesn't wait for the previous tick; the
+  claim prevents double-sends, but ticks can pile up under load.
 - **Out of scope — rate limiting:** worker should respect provider rate limits if
   a real provider imposes them; not handled for the mock.
 - **Retry policy:** max attempts, backoff, and what happens if a retry would land in

@@ -2,7 +2,14 @@
 
 ## Data model
 
-New `Notification` table, one row per reminder.
+New `Notification` table (`notifications`), one row per reminder. Unique on
+`(interviewId, type)`; indexed on `(status, scheduleTime)` for the claim query.
+
+- `type`: `HOURS_24` | `HOURS_2`.
+- `status`: `PENDING` → `SENT` (awaiting delivery status) → `DELIVERED`.
+  `OPTED_OUT` when skipped because the candidate opted out. A failed delivery goes
+  back to `PENDING` for retry; `FAILED` once retries are exhausted.
+- `Candidate.smsOptedIn` (boolean, default `true`).
 
 - Linked to the **interview** (not the application), since an application can have
   several interviews and the rules are per interview.
@@ -56,10 +63,7 @@ New `Notification` table, one row per reminder.
 - **Batch size** for the claim: not chosen.
 - **10s lease vs. send duration:** if a send + DB write exceeds 10s, the lease
   expires mid-send and another worker can resend.
-- **Status values:** agreed semantics are pending, done (sent), and done (opted
-  out); names not chosen, and an intermediate "sent, awaiting delivery status"
-  state is not yet defined.
-- **Opt-in field:** name and default not chosen.
+- **Max retries** before a row is marked `FAILED`: not chosen.
 - **Late-created + quiet-hours shift:** a reminder whose shifted `scheduleTime` is
   already in the past (e.g. 2h reminder shifted to 8:30pm, interview created at
   10pm) would send immediately, inside quiet hours. Not decided.

@@ -139,6 +139,9 @@ model Candidate {
   // IANA time zone, e.g. "America/Chicago". Null when unknown.
   timezone    String?
 
+  // False after a candidate.opted_out event; true again after candidate.opted_in.
+  smsOptedIn Boolean @default(true)
+
   applications Application[]
 
   interviews Interview[]
@@ -197,7 +200,47 @@ model Interview {
   applicationId String
   application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
 
+  notifications Notification[]
+
   @@map("interviews")
+}
+
+enum NotificationType {
+  HOURS_24
+  HOURS_2
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  DELIVERED
+  OPTED_OUT
+  FAILED
+}
+
+// One row per reminder text for an interview.
+model Notification {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type   NotificationType
+  status NotificationStatus @default(PENDING)
+
+  // When to send, in UTC, with quiet hours already applied.
+  scheduleTime DateTime
+  // Workers claim a row by setting this; rows with lockedUntil in the future are skipped.
+  lockedUntil  DateTime?
+  retryCount   Int       @default(0)
+  // Set after send, used to poll the provider for delivery status.
+  providerMessageId String?
+
+  interviewId String
+  interview   Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+
+  @@unique([interviewId, type])
+  @@index([status, scheduleTime])
+  @@map("notifications")
 }
 
 enum SmsProviderMessageStatus {

@@ -150,16 +150,22 @@ describe('SendWorker', () => {
     expect(send).not.toHaveBeenCalled()
   })
 
-  it('marks the reminder failed when send throws', async () => {
+  it('marks the reminder failed when send throws, and retries it next tick', async () => {
     jest.spyOn(sms, 'send').mockRejectedValueOnce(new Error('provider down'))
     const { id } = await createNotification()
 
     await worker.tick()
 
-    const notification = await reload(id)
-    expect(notification.status).toBe(FAILED)
-    expect(notification.retryCount).toBe(0)
-    expect(notification.lockedUntil).toBeNull()
+    const failed = await reload(id)
+    expect(failed.status).toBe(FAILED)
+    expect(failed.retryCount).toBe(0)
+    expect(failed.lockedUntil).toBeNull()
+
+    await worker.tick()
+
+    const retried = await reload(id)
+    expect(retried.status).toBe(SENT)
+    expect(retried.retryCount).toBe(1)
   })
 
   it('resends a failed reminder and counts the retry', async () => {

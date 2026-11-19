@@ -61,7 +61,8 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
   `PENDING`, or `FAILED` with `retryCount < 3`.
   - Candidate opted out → `OPTED_OUT`, lock cleared.
   - Send succeeds → `SENT`, `providerMessageId` saved, lock cleared.
-  - Send throws → `FAILED`, lock cleared.
+  - Send throws → not handled (the mock provider never throws). The tick
+    aborts; the row keeps its lease and is re-claimed after it expires (10s).
   - `retryCount` is incremented only when the row being sent was `FAILED`.
   - Message: "Reminder: your interview for {job} at {location} is {Thu, Nov 19 at
     12:44 PM}. Address: {address}" — time in the location's timezone; same text
@@ -81,11 +82,10 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
 - **Out of scope — retries ignore quiet hours:** a `FAILED` row is resent on the
   next tick regardless of local time. Shifted 2h reminders have a 30-min buffer
   for this; unshifted reminders near 9:00pm (e.g. 8:50pm) do not.
-- **Retry spacing:** a `FAILED` row is re-claimed immediately (same tick), so a
-  provider outage can exhaust all 3 retries within milliseconds. Not decided:
-  backoff via `scheduleTime`, keep the lease as backoff, or accept immediate
-  retries. The test "marks the reminder failed when send throws" currently fails
-  because of this.
+- **Retry spacing (decided: next tick):** a row attempted in a tick is not
+  re-claimed in that tick; the worker moves on to other rows and the `FAILED` row
+  is retried on the next tick (~5s later). A provider outage can still exhaust all
+  3 retries in ~15s.
 - **Delivery status:** provider-reported `FAILED` is handled by the status
   worker (next step).
 - **Overlapping ticks:** `setInterval` doesn't wait for the previous tick; the

@@ -5,7 +5,7 @@ import {
   OnModuleDestroy,
   OnModuleInit,
 } from '@nestjs/common'
-import { NotificationStatus } from '@prisma/client'
+import { NotificationStatus, Prisma } from '@prisma/client'
 import { format } from 'date-fns'
 
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -42,9 +42,13 @@ export class SendWorker implements OnModuleInit, OnModuleDestroy {
   }
 
   async tick() {
+    // Rows already attempted this tick. A row that fails is not re-claimed
+    // until the next tick, so the worker moves on to other rows.
+    const attempted: string[] = []
     for (let i = 0; i < MAX_ROWS_PER_TICK; i++) {
-      const row = await this.claim()
+      const row = await this.claim(attempted)
       if (!row) return
+      attempted.push(row.id)
       await this.process(row)
     }
   }
@@ -54,7 +58,11 @@ export class SendWorker implements OnModuleInit, OnModuleDestroy {
    * SKIP LOCKED lets other instances claim different rows concurrently; the
    * statement commits immediately, so no lock is held while sending.
    */
-  private async claim(): Promise<ClaimedRow | undefined> {
+  private async claim(exclude: string[]): Promise<ClaimedRow | undefined> {
+    const excludeClause =
+      exclude.length > 0
+        ? Prisma.sql`AND id NOT IN (${Prisma.join(exclude)})`
+        : Prisma.empty
     const rows = await this.prisma.$queryRaw<ClaimedRow[]>`
       UPDATE notifications
       SET "lockedUntil" = now() + make_interval(secs => ${LEASE_SECONDS})
@@ -66,6 +74,7 @@ export class SendWorker implements OnModuleInit, OnModuleDestroy {
             OR (status = 'FAILED' AND "retryCount" < ${MAX_RETRIES})
           )
           AND ("lockedUntil" IS NULL OR "lockedUntil" < now())
+          ${excludeClause}
         ORDER BY "scheduleTime"
         LIMIT 1
         FOR UPDATE SKIP LOCKED
@@ -111,31 +120,19 @@ export class SendWorker implements OnModuleInit, OnModuleDestroy {
       `Reminder: your interview for ${job.title} at ${location.name} is ` +
       `${startsAt}. Address: ${location.address}`
 
-    try {
-      const providerMessageId = await this.sms.send(
-        location.phoneNumber,
-        candidate.phoneNumber,
-        body,
-      )
-      await this.prisma.notification.update({
-        where: { id },
-        data: {
-          status: NotificationStatus.SENT,
-          providerMessageId,
-          lockedUntil: null,
-          retryCount: { increment: retryIncrement },
-        },
-      })
-    } catch (err) {
-      this.logger.error(`Send failed for notification ${id}: ${err}`)
-      await this.prisma.notification.update({
-        where: { id },
-        data: {
-          status: NotificationStatus.FAILED,
-          lockedUntil: null,
-          retryCount: { increment: retryIncrement },
-        },
-      })
-    }
+    const providerMessageId = await this.sms.send(
+      location.phoneNumber,
+      candidate.phoneNumber,
+      body,
+    )
+    await this.prisma.notification.update({
+      where: { id },
+      data: {
+        status: NotificationStatus.SENT,
+        providerMessageId,
+        lockedUntil: null,
+        retryCount: { increment: retryIncrement },
+      },
+    })
   }
 }

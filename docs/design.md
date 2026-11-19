@@ -41,7 +41,12 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
   - **2-hour reminder:** if it falls in quiet hours, shift **earlier**, to before
     9:00pm the previous evening, with a buffer (proposed 30 min, i.e. 8:30pm) so
     retries still happen outside quiet hours.
-  - Jitter is added to shifted times to spread out the 8:00am / 8:30pm bursts.
+  - Jitter of up to 1 hour is applied to **shifted** times only, away from quiet
+    hours: 24h reminders land 8:00–9:00am, 2h reminders land 7:30–8:30pm.
+- A reminder is also skipped if its shifted `scheduleTime` is already in the past
+  at creation time.
+- Implemented in `src/notifications/schedule-time.ts`; rows are created via a
+  nested write in `createInterview`.
 
 ## Workers
 
@@ -64,10 +69,6 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
 - **10s lease vs. send duration:** if a send + DB write exceeds 10s, the lease
   expires mid-send and another worker can resend.
 - **Max retries** before a row is marked `FAILED`: not chosen.
-- **Late-created + quiet-hours shift:** a reminder whose shifted `scheduleTime` is
-  already in the past (e.g. 2h reminder shifted to 8:30pm, interview created at
-  10pm) would send immediately, inside quiet hours. Not decided.
-- **Jitter range:** not chosen.
 - **Out of scope — rate limiting:** worker should respect provider rate limits if
   a real provider imposes them; not handled for the mock.
 - **Retry policy:** max attempts, backoff, and what happens if a retry would land in

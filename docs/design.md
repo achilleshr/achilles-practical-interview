@@ -67,9 +67,14 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
   - Message: "Reminder: your interview for {job} at {location} is {Thu, Nov 19 at
     12:44 PM}. Address: {address}" — time in the location's timezone; same text
     for both reminder types.
-- **Status worker:** polls the provider with `getStatus` for sent messages. Uses
-  the same `lockedUntil` claim so a failure isn't counted (and retry count
-  incremented) twice. On `FAILED`, the row is retried.
+- **Status worker** (`src/notifications/status-worker.ts`): `setInterval` every
+  5s on every instance. Claims one `SENT` row at a time with the same
+  `SKIP LOCKED` + 10s lease pattern, up to 100 rows per tick, and calls
+  `getStatus` for it. Rows checked in a tick are not re-claimed in that tick.
+  - `DELIVERED` → `DELIVERED`.
+  - `FAILED` → `FAILED`; the send worker resends it (counting the retry).
+  - `QUEUED` → stays `SENT`, rechecked next tick.
+  - Lock cleared in all cases.
 
 ## Open questions / gaps
 
@@ -86,8 +91,8 @@ New `Notification` table (`notifications`), one row per reminder. Unique on
   re-claimed in that tick; the worker moves on to other rows and the `FAILED` row
   is retried on the next tick (~5s later). A provider outage can still exhaust all
   3 retries in ~15s.
-- **Delivery status:** provider-reported `FAILED` is handled by the status
-  worker (next step).
+- **Status checks are one `getStatus` call per row**, although `getStatus`
+  accepts a list of IDs.
 - **Overlapping ticks:** `setInterval` doesn't wait for the previous tick; the
   claim prevents double-sends, but ticks can pile up under load.
 - **Out of scope — rate limiting:** worker should respect provider rate limits if

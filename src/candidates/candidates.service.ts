@@ -38,7 +38,17 @@ export class CandidatesService {
     }
   }
 
-  private async handleOptedOut(_candidateId: string) {}
+  private async handleOptedOut(candidateId: string) {
+    await this.prisma.candidate.update({
+      where: { id: candidateId },
+      data: { smsOptedIn: false },
+    })
+  }
 
-  private async handleOptedIn(_candidateId: string) {}
+  private async handleOptedIn(candidateId: string) {
+    await this.prisma.candidate.update({
+      where: { id: candidateId },
+      data: { smsOptedIn: true },
+    })
+  }
 }
